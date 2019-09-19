@@ -1,12 +1,13 @@
+@import "background.scss";
 .nav {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	padding: 10px;
+	background: $mainbg;
 	.search {
 		width: 250px;
 		height: 30px;
-		background: #dadada;
 		border: none;
 		border-radius: 20px;
 		-webkit-border-radius: 20px;

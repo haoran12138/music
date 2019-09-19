@@ -15,42 +15,22 @@ export default new Router({
     {
       path: '/',
       component: Home,
-      redirect: '/recommend',
-      children: [
-        // 个性推荐
-        {
-          path: '/recommend',
-          name: 'Recommend',
-          component: Recommend,
-        },
-        // 歌单
-        {
-          path: '/songlist',
-          name: 'SongList',
-          component: SongList,
-        },
-        // // 主播电台
-        // {
-        //   path: '/',
-        //   name: 'Recommend',
-        //   component: Recommend,
-        // },
-      ],
+      name: 'Home',
     },
     {
-      //排行榜
+      // 排行榜
       path: '/ranking',
       component: Ranking,
       name: 'Ranking',
     },
     {
-      //我的
+      // 我的
       path: '/mine',
       component: Mine,
       name: 'Mine',
     },
     {
-      //账户
+      // 账户
       path: '/account',
       component: Account,
       name: 'Account',

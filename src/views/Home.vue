@@ -5,45 +5,36 @@
       <input class="search" type="text" placeholder="搜索音乐、歌词、电台" />
       <van-icon class="con" name="coupon" />
     </div>
-    <van-tabs route>
-      <van-tab :to="{name: 'Recommend'}" title="个性推荐"></van-tab>
-      <van-tab :to="{name: 'SongList'}" title="歌单"></van-tab>
-      <van-tab title="电台"></van-tab>
+    <van-tabs v-model="tabName">
+      <van-tab name="Recommend" title="个性推荐"></van-tab>
+      <van-tab name="SongList" title="歌单"></van-tab>
+      <van-tab name title="电台"></van-tab>
     </van-tabs>
-    <router-view></router-view>
+    <keep-alive>
+      <component v-bind:is="tabName"></component>
+    </keep-alive>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
+import Recommend from "../components/Home/Recommend.vue";
+import SongList from "../components/Home/SongList.vue";
 export default {
   name: "home",
-  components: {}
+  data() {
+    return {
+      tabName: "Recommend"
+    };
+  },
+  components: {
+    Recommend,
+    SongList
+  }
 };
 </script>
 <style lang="scss" scoped>
-.nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px;
-  .search {
-    width: 250px;
-    height: 30px;
-    background: #dadada;
-    border: none;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
-    text-align: center;
-    font-size: 12px;
-  }
-
-  .con {
-    font-size: 24px;
-  }
+.van-tabs__wrap .van-tabs__line {
+  background-color: #444;
 }
 </style>
