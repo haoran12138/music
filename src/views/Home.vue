@@ -8,7 +8,7 @@
     <van-tabs v-model="tabName">
       <van-tab name="Recommend" title="个性推荐"></van-tab>
       <van-tab name="SongList" title="歌单"></van-tab>
-      <van-tab name title="电台"></van-tab>
+      <van-tab name="Radio" title="电台"></van-tab>
     </van-tabs>
     <keep-alive>
       <component v-bind:is="tabName"></component>
@@ -20,21 +20,25 @@
 // @ is an alias to /src
 import Recommend from "../components/Home/Recommend.vue";
 import SongList from "../components/Home/SongList.vue";
+import Radio from "../components/Home/Radio.vue";
 export default {
   name: "home",
   data() {
     return {
-      tabName: "Recommend"
+      tabName: "Recommend",
     };
   },
   components: {
     Recommend,
-    SongList
-  }
+    SongList,
+    Radio
+  },
+
 };
 </script>
 <style lang="scss" scoped>
 .van-tabs__wrap .van-tabs__line {
   background-color: #444;
 }
+
 </style>

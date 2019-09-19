@@ -1,9 +1,8 @@
 import Vue from 'vue';
 import Vant from 'vant';
 import 'vant/lib/index.css';
-import './common/common.scss';
-import './common/header.scss';
-import './common/vant.scss';
+import './common/scss/common.scss';
+import './common/scss/vant.scss';
 import App from './App.vue';
 import router from './router';
 

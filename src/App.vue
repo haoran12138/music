@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <van-tabbar route>
       <van-tabbar-item :to="{name: 'Home'}" icon="home-o">发现音乐</van-tabbar-item>
       <van-tabbar-item :to="{name: 'Ranking'}" icon="friends-o">排行榜</van-tabbar-item>
@@ -11,11 +13,9 @@
 </template>
 <script>
 import Home from "./views/Home";
+
 export default {};
 </script>
 
 <style lang="scss" scoped>
-@import "./common/background.scss";
-
-
 </style>

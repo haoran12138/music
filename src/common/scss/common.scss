@@ -1,0 +1,36 @@
+@charset "utf-8";
+@import 'reset.scss';
+a {
+	text-decoration: none;
+	color: black;
+}
+
+* {
+	box-sizing: border-box;
+}
+input {
+	outline-style: none;
+	border: 0;
+}
+html {
+	font-size: 26.66vw;
+	min-width: 320px;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	font-size: 0.16rem;
+}
+
+section {
+	background: #fff;
+	flex: 1;
+	overflow: auto;
+}
+@import 'header.scss';
