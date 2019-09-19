@@ -2,15 +2,9 @@
   <div class="home">
     <div class="nav">
       <van-icon class="con" name="coupon" />
-      <input class="search" type="text" placeholder="搜索音乐、歌词、电台" />
+      <span class="title">账户</span>
       <van-icon class="con" name="coupon" />
-    </div>
-    <van-tabs route>
-      <van-tab :to="{name: 'Recommend'}" title="个性推荐"></van-tab>
-      <van-tab :to="{name: 'SongList'}" title="歌单"></van-tab>
-      <van-tab title="电台"></van-tab>
-    </van-tabs>
-    <router-view></router-view>
+    </div>账户
   </div>
 </template>
 

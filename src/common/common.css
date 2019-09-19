@@ -1,0 +1,103 @@
+@charset "utf-8";
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+	margin: 0;
+	padding: 0;
+	font-family: '微软雅黑';
+}
+fieldset,
+img {
+	border: 0;
+}
+ul,
+ol,
+li {
+	list-style: none;
+	font-family: 'Microsoft YaHei';
+}
+
+input,
+button,
+textarea {
+	*font-size: 100%;
+}
+ol,
+ul {
+	list-style: none;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table,
+tr,
+td {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: 0;
+	padding: 0;
+}
+caption,
+th {
+	text-align: left;
+}
+sup,
+sub {
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+/* remember to highlight anchors and inserts somehow! */
+blockquote,
+q {
+	quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+	content: none;
+}
+
+.ehn,
+.otw,
+.tow {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.clearfix {
+	clear: both;
+	zoom: 1;
+}
+.clearfix:after {
+	display: block;
+	clear: both;
+	content: '\0020';
+	visibility: hidden;
+	height: 0;
+}
