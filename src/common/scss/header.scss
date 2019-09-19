@@ -3,8 +3,13 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	padding: 10px;
+	padding: .08rem;
+	position: fixed;
 	background: $mainColor;
+	z-index: 9;
+	top: 0;
+	left: 0;;
+	width: 100%;
 	.search {
 		width: 2.5rem;
 		height: 0.3rem;

@@ -106,13 +106,10 @@ export default {
   height: 1.46rem;
   img {
     width: 100%;
-    padding: 0 5px;
     border-radius: 0.15rem;
   }
 }
-.recommend {
-  padding-bottom: 50px;
-}
+
 .van-hairline--top::after,
 .van-grid-item__content::after {
   border-color: #fff;
@@ -121,9 +118,8 @@ export default {
 .playlist {
   margin-top: 0.1rem;
   width: 100%;
-  padding: 0 10px;
   h3 {
-    padding-left: 10px;
+    padding-left: .1rem;
   }
   .highquality,
   .toMove,
