@@ -33,6 +33,9 @@ export default {
     SongList,
     Radio
   },
+  methods: {
+
+  },
 
 };
 </script>
@@ -40,5 +43,4 @@ export default {
 .van-tabs__wrap .van-tabs__line {
   background-color: #444;
 }
-
 </style>
