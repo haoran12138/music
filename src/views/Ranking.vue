@@ -21,7 +21,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from "axios";
 export default {
   name: "ranking",
@@ -29,7 +28,7 @@ export default {
     return {
       list: [],
       artistToplist: [],
-      rewardToplist: []
+      rewardToplist: [],
     };
   },
   created() {
@@ -75,9 +74,8 @@ export default {
       flex-direction: column;
       justify-content: center;
       p {
-
-        height: .3rem;
-        line-height: .3rem;
+        height: 0.3rem;
+        line-height: 0.3rem;
         font-size: 0.12rem;
         color: rgba(0, 0, 0, 0.7);
         white-space: nowrap;

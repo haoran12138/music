@@ -12,7 +12,6 @@
   </div>
 </template>
 <script>
-import Home from "./views/Home";
 
 export default {};
 </script>
