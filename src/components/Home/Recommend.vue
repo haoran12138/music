@@ -8,14 +8,16 @@
     <van-grid clickable :column-num="3">
       <van-grid-item icon="home-o" text="私人FM" to="/" />
       <van-grid-item icon="home-o" text="每日歌曲推荐" to="/" />
-      <van-grid-item icon="home-o" text="热歌榜" to="/" />
+      <van-grid-item icon="home-o" text="热歌榜" :to="{name:'ListDetails',query:{xid:1}}" />
     </van-grid>
     <div class="playlist">
       <h3>推荐歌单</h3>
       <div class="highquality">
         <figure v-for="item in highquality" :key="item.id">
-          <img v-lazy="item.coverImgUrl" :src="item.coverImgUrl" alt />
-          <figcaption>{{ item.name }}</figcaption>
+          <router-link :to="{name:'SongListsDetails',query:{id:item.id}}">
+            <img v-lazy="item.coverImgUrl" :src="item.coverImgUrl" alt />
+            <figcaption>{{ item.name }}</figcaption>
+          </router-link>
         </figure>
       </div>
     </div>
@@ -119,7 +121,7 @@ export default {
   margin-top: 0.1rem;
   width: 100%;
   h3 {
-    padding-left: .1rem;
+    padding-left: 0.1rem;
   }
   .highquality,
   .toMove,
@@ -131,7 +133,7 @@ export default {
     margin-top: 0.1rem;
     figure {
       width: 1.15rem;
-      height: 1.6rem;
+      height: 1.65rem;
       img {
         width: 1.15rem;
         height: 1.1rem;

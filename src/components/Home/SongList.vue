@@ -10,8 +10,10 @@
     </div>
     <div class="playlist">
       <figure v-for="item in playlist" :key="item.id">
-        <img v-lazy="item.coverImgUrl" :src="item.coverImgUrl" alt />
-        <figcaption>{{ item.name }}</figcaption>
+        <router-link :to="{name:'SongListsDetails',query:{id:item.id}}">
+          <img v-lazy="item.coverImgUrl" :src="item.coverImgUrl" alt />
+          <figcaption>{{ item.name }}</figcaption>
+        </router-link>
       </figure>
     </div>
   </div>
@@ -54,13 +56,13 @@ export default {
   .description {
     margin-left: 0.3rem;
     p:nth-of-type(1) {
-      font-size: .12rem;
-      margin-top: .2rem;
+      font-size: 0.12rem;
+      margin-top: 0.2rem;
     }
     p:nth-of-type(2) {
       margin-top: 0.05rem;
-      font-size: .10rem;
-      color:rgba(255, 255, 255, 0.5);
+      font-size: 0.1rem;
+      color: rgba(255, 255, 255, 0.5);
     }
   }
 }
@@ -82,9 +84,9 @@ export default {
     }
     figcaption {
       color: rgba(80, 80, 80, 1);
-      font-size: .1rem;
+      font-size: 0.1rem;
       line-height: 170%;
-      padding: .05rem;
+      padding: 0.05rem;
       text-align: left;
       overflow: hidden;
       text-overflow: ellipsis;

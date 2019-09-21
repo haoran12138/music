@@ -49,14 +49,12 @@ export default {
       type: "get",
       url: "http://47.104.88.123:3000/dj/today/perfered"
     }).then(res => {
-      // 电台轮播图没数据  首页轮播图凑合下吧
       this.todayPerfereds = res.data.data;
     });
     axios({
       type: "get",
       url: "http://47.104.88.123:3000/album/newest"
     }).then(res => {
-      // 电台轮播图没数据  首页轮播图凑合下吧
       this.newset = res.data.albums;
     });
   },
