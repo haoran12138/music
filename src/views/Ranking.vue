@@ -3,7 +3,7 @@
     <div class="nav">
       <van-icon class="con" name="coupon" />
       <span class="title">排行榜</span>
-      <van-icon class="con" name="coupon" />
+      <van-icon class="con" name="coupon" @click="showPlay(true)" />
     </div>
     <div class="officials">
       <h4>官方榜</h4>
@@ -34,7 +34,7 @@
 <script>
 import axios from "axios";
 import Lists from "../components/Ranking/Lists.vue";
-
+import { mapMutations } from "vuex";
 // 列表里没有xid 手动加一个
 const listXidName = [
   "云音乐新歌榜",
@@ -108,6 +108,9 @@ export default {
     otherLists: function() {
       return this.list.slice(17, 26);
     }
+  },
+  methods: {
+    ...mapMutations(["showPlay"])
   },
   components: {
     lists: Lists

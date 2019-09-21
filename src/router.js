@@ -6,6 +6,7 @@ import Ranking from './views/Ranking.vue';
 import Mine from './views/Mine.vue';
 import Account from './views/Account.vue';
 import Search from './views/Search.vue';
+import SearchRes from './views/SearchRes.vue';
 import ListDetails from './components/Ranking/ListDetails.vue';
 import SongListsDetails from './components/Song/songListsDetails.vue';
 
@@ -38,12 +39,6 @@ export default new Router({
       name: 'Account',
     },
     {
-      // 首页搜索
-      path: '/search',
-      component: Search,
-      name: 'Search',
-    },
-    {
       // 排行榜详情
       path: '/listDetails',
       component: ListDetails,
@@ -54,6 +49,18 @@ export default new Router({
       path: '/songListsDetails',
       component: SongListsDetails,
       name: 'SongListsDetails',
+    },
+    {
+      // 首页搜索
+      path: '/search',
+      component: Search,
+      name: 'Search',
+    },
+    {
+      // 首页搜索结果
+      path: '/searchres',
+      component: SearchRes,
+      name: 'SearchRes',
     },
   ],
 });

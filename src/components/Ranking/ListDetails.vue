@@ -5,7 +5,7 @@
       <div class="nav">
         <van-icon name="arrow-left" @click="$router.back(-1)" />
         <span class="title">排行榜</span>
-        <van-icon class="con" name="coupon" />
+        <van-icon class="con"  @click="showPlay(true)" name="coupon" />
       </div>
       <div class="cover">
         <div class="bg">
@@ -25,7 +25,12 @@
       </div>
       <div class="songs">
         <ul class="song">
-          <li v-for="(item, index) in list.tracks" :key="index">
+          <li
+            class="clear"
+            @click="play({index:index,playList:list.trackIds})"
+            v-for="(item, index) in list.tracks"
+            :key="index"
+          >
             <div class="ranking">{{ index+1 }}</div>
             <div class="content">
               <div class="info">
@@ -48,6 +53,7 @@
 </template>
 <script>
 import axios from "axios";
+import { mapMutations } from "vuex";
 export default {
   name: "listdetails",
   data() {
@@ -64,7 +70,8 @@ export default {
       }).then(res => {
         this.list = res.data.playlist;
       });
-    }
+    },
+    ...mapMutations(["play","showPlay"])
   },
   computed: {
     // 评论数量

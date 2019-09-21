@@ -3,9 +3,9 @@
   <transition name="fade">
     <div class="songListsDetails">
       <!-- 遮罩层 -->
-      <van-overlay z-index="996" custom-style="background-color:#fff" v-show="show" />
+      <van-overlay z-index="96" custom-style="background-color:#fff" v-show="show" />
       <div class="overlay" v-show="show">
-        <van-overlay z-index="998" custom-style="background-color:#fff" v-show="show" />
+        <van-overlay z-index="98" custom-style="background-color:#fff" v-show="show" />
         <button @click="onClickHide">x</button>
         <img :src="list.coverImgUrl" alt />
         <p class="name">{{ list.name }}</p>
@@ -18,7 +18,7 @@
       <div class="nav">
         <van-icon name="arrow-left" @click="$router.back(-1)" />
         <span class="title">歌单</span>
-        <van-icon class="con" name="coupon" />
+        <van-icon class="con" @click="showPlay(true)" name="coupon" />
       </div>
       <div class="cover">
         <div class="bg">
@@ -46,7 +46,12 @@
       </div>
       <div class="songs">
         <ul class="song">
-          <li v-for="(item, index) in list.tracks" :key="index">
+          <li
+            @click="play({index:index,playList:list.trackIds})"
+            class="clear"
+            v-for="(item, index) in list.tracks"
+            :key="index"
+          >
             <div class="ranking">{{ index+1 }}</div>
             <div class="content">
               <div class="info">
@@ -69,6 +74,7 @@
 </template>
 <script>
 import axios from "axios";
+import { mapMutations } from "vuex";
 export default {
   name: "songListsDetails",
   data() {
@@ -94,7 +100,14 @@ export default {
     },
     onClickHide() {
       this.show = false;
-    }
+    },
+    selectItem(item, index) {
+      this.selectPlay({
+        list: this.listDetail,
+        index: index
+      });
+    },
+    ...mapMutations(["play", "showPlay"])
   },
   computed: {
     // 评论数量
@@ -158,13 +171,13 @@ export default {
 .overlay {
   position: absolute;
   top: 0;
-  z-index: 997;
+  z-index: 97;
   display: flex;
   flex-direction: column;
   align-items: center;
   button {
     position: absolute;
-    z-index: 999;
+    z-index: 99;
     top: 0.1rem;
     right: 0.1rem;
     background: rgba(255, 255, 255, 0);
@@ -214,14 +227,16 @@ export default {
 
   .coverImg {
     height: 1.5rem;
-    display: flex;
+    overflow: hidden;
     img {
       width: 1.5rem;
       height: 1.5rem;
+      float: left;
     }
     .info {
       padding: 0.1rem;
-
+      float: right;
+      width: 2rem;
       .name {
         font-size: 0.14rem;
       }

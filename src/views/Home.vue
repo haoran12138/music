@@ -2,8 +2,13 @@
   <div class="home">
     <div class="nav">
       <van-icon class="con" name="coupon" />
-      <input class="search" type="text" placeholder="搜索音乐、歌词、电台" />
-      <van-icon class="con" name="coupon" />
+      <input
+        @click=" $router.push({ name: 'Search' })"
+        class="search"
+        type="text"
+        placeholder="搜索音乐、歌词、电台"
+      />
+      <van-icon @click="showPlay(true)" class="con" name="coupon" />
     </div>
     <van-tabs v-model="tabName">
       <van-tab name="Recommend" title="个性推荐"></van-tab>
@@ -23,6 +28,8 @@
 import Recommend from "../components/Home/Recommend.vue";
 import SongList from "../components/Home/SongList.vue";
 import Radio from "../components/Home/Radio.vue";
+import { mapMutations } from "vuex";
+
 export default {
   name: "home",
   data() {
@@ -35,7 +42,9 @@ export default {
     SongList,
     Radio
   },
-  methods: {}
+  methods: {
+    ...mapMutations(["showPlay"])
+  }
 };
 </script>
 <style lang="scss" scoped>

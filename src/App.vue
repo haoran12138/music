@@ -3,6 +3,7 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
+    <player></player>
     <van-tabbar route>
       <van-tabbar-item :to="{name: 'Home'}" icon="music-o">发现</van-tabbar-item>
       <van-tabbar-item :to="{name: 'Ranking'}" icon="bar-chart-o">排行榜</van-tabbar-item>
@@ -12,9 +13,15 @@
   </div>
 </template>
 <script>
-
-export default {};
+import Player from "./components/Play/Player.vue";
+export default {
+  components: {
+    Player
+  }
+};
 </script>
 
 <style lang="scss" scoped>
+.app {
+}
 </style>

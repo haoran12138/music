@@ -3,12 +3,12 @@
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-	padding: .08rem;
+	padding: 0.08rem;
 	position: fixed;
-	background: $mainColor;
+	background: #fff;
 	z-index: 9;
 	top: 0;
-	left: 0;;
+	left: 0;
 	width: 100%;
 	.search {
 		width: 2.5rem;
@@ -20,7 +20,8 @@
 		-ms-border-radius: 0.2rem;
 		-o-border-radius: 0.2rem;
 		text-align: center;
-		font-size: .12rem;
+		font-size: 0.12rem;
+		border: 1px solid #ccc;
 	}
 
 	.con {
@@ -31,6 +32,6 @@
 		height: 0.3rem;
 		text-align: center;
 		line-height: 0.3rem;
-		color: #fff;
+		color: #000;
 	}
 }
