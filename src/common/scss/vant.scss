@@ -38,3 +38,15 @@
 		}
 	}
 }
+.player {
+	.van-slider__button {
+		width: 0.1rem;
+		height: 0.1rem;
+	}
+}
+#app{
+	// 底部下面好像有条缝
+	.van-tabbar--fixed{
+		bottom: -1px;
+	}
+}

@@ -8,11 +8,14 @@
         <div class="header">
           <van-icon class="down" name="arrow-down" size="0.2rem" @click="showPlay(false)" />
           <div class="songInfo">
-            <div class="song">{{songs.al.name}}</div>
+            <div class="song">{{songs.name}}</div>
             <div class="singer">
               <span v-for="(ar,index) in songs.ar" :key="index">{{ ar.name }}</span>
             </div>
           </div>
+        </div>
+        <div class="changeSound">
+          <van-slider active-color="#fff" inactive-color="#fff6" v-model="sound" />
         </div>
         <div class="cover">
           <img :src="songs.al.picUrl" alt />
@@ -27,20 +30,49 @@
             <span class="audio-time" id="audioTime">00:00</span>
           </div>
           <div class="controls">
+            <!-- 播放控制器 -->
+            <div class="changeMode" @click="changeMode">
+              <span :class="modeClassName"></span>
+            </div>
             <van-icon @click="previousPlay" name="arrow-left" />
             <button id="playPause">
               <van-icon :name="iconName" />
             </button>
             <van-icon @click="nextPlay" name="arrow" />
+            <div @click="showPlayList = true">
+              <span class="iconfont icon-bofangliebiao"></span>
+            </div>
           </div>
         </div>
       </div>
+      <van-popup
+        round
+        position="bottom"
+        :style="{ height: '60vh',width:'100%',background:'rgba(255, 255,255, 0.86)' }"
+        v-model="showPlayList"
+      >
+        <div class="popup">
+          <div class="playList">
+            <ul>
+              <li @click="changeIndex(index)" v-for="(item,index) in playList" :key="index">
+                <div class="name">{{ item.name }}</div>
+                <span class="divide">-</span>
+                <div class="singer">
+                  <span v-for="(singer,index) in item.singer" :key="index">{{ singer.name }}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="close" @click="showPlayList = false">关&nbsp;闭</div>
+        </div>
+      </van-popup>
     </div>
   </transition>
 </template>
 <script>
 import { mapMutations, mapState } from "vuex";
 import axios from "axios";
+import "../../common/font/iconfont.css";
 export default {
   name: "player",
   data() {
@@ -51,22 +83,51 @@ export default {
           picUrl: ""
         }
       },
-      iconName: "play-circle-o"
+      sound: 100,
+      iconName: "play-circle-o",
+      showPlayList: false,
+      modeClassName: "iconfont icon--lbxh"
     };
   },
   computed: {
-    ...mapState(["isShow", "playList", "playIndex", "playId"])
+    ...mapState(["isShow", "playList", "playId", "playMode", "playIndex"]),
+    playModeUrl() {
+      return `./${this.playMode}.png`;
+    }
   },
   methods: {
-    ...mapMutations(["showPlay", "previousPlay", "nextPlay"]),
-    scheduleChange(e) {
-      console.log(e.detail);
+    ...mapMutations([
+      "showPlay",
+      "previousPlay",
+      "nextPlay",
+      "changePlayMode",
+      "changeIndex"
+    ]),
+    changeMode() {
+      const ModeClass = [
+        "icon--lbxh",
+        "icon-danquxunhuan",
+        "icon-suijixunhuan"
+      ];
+      this.changePlayMode();
+      this.modeClassName = "iconfont " + ModeClass[this.playMode - 1];
+    },
+    // 列表显示播放到第几个
+    playListNow() {
+      $(".playList li")
+        .eq(this.playIndex)
+        .addClass("now")
+        .siblings()
+        .removeClass("now");
+      var top = $(".playList li").eq(this.playIndex).position().top;
+
+      console.log(scrollTop);
     }
   },
   created() {
     var _this = this;
     $(function() {
-      var audio = $("#audioTag").get(0);
+      var audio = document.getElementsByTagName("audio")[0];
       //播放暂停控制
       $("#playPause").click(function() {
         //监听音频播放时间并更新进度条
@@ -128,18 +189,25 @@ export default {
     //播放完成
     function audioEnded() {
       var audio = document.getElementsByTagName("audio")[0];
-      audio.currentTime = 0;
-      audio.pause();
-      _this.iconName = "play-circle-o";
-      _this.nextPlay();
+      if (_this.playMode === 2) {
+        // 单曲循环
+        audio.play();
+      } else {
+        audio.currentTime = 0;
+        audio.pause();
+        _this.iconName = "play-circle-o";
+        _this.nextPlay();
+      }
     }
+    this.playListNow();
   },
   watch: {
     // 监听id 是否改变 切换歌曲
     playId: function() {
       const _this = this;
+      _this.showPlayList = false;
       // 重置
-      this.songs.al.picUrl = "";
+      _this.songs.al.picUrl = "";
       var audio = document.getElementsByTagName("audio")[0];
       audio.currentTime = 0;
       audio.pause();
@@ -148,6 +216,7 @@ export default {
       $(".play-pause>span")
         .removeClass("icon-pause")
         .addClass("icon-play");
+      // 获得歌曲url
       axios({
         type: "get",
         url: `http://47.104.88.123:3000/song/url?id=${this.playId}`
@@ -155,8 +224,10 @@ export default {
         _this.url = res.data.data[0].url;
         setTimeout(() => {
           $("#playPause").click();
-        }, 2000);
+          _this.playListNow();
+        }, 1000);
       });
+      // 获得歌曲信息
       axios({
         type: "get",
         url: `http://47.104.88.123:3000/song/detail?ids=${this.playId}`
@@ -164,13 +235,17 @@ export default {
         _this.songs = res.data.songs[0];
       });
     },
+    // 解决在播放页也可以滚动body 问题
     isShow: function() {
-      // 解决在播放页也可以滚动body 问题
       if (this.isShow) {
         document.querySelector("body").style.overflowY = "hidden";
       } else {
         document.querySelector("body").style.overflowY = "scroll";
       }
+    },
+    // 监听音量改变
+    sound: function() {
+      $("#audioTag").get(0).volume = this.sound / 100;
     }
   }
 };
@@ -192,7 +267,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  background: #fff;
+  background: #ffffff;
   color: #fff;
   font-weight: 300;
   .bg {
@@ -230,6 +305,7 @@ export default {
         text-align: center;
         .song {
           font-weight: 400;
+          font-size: 0.2rem;
           line-height: 0.25rem;
           overflow: hidden;
           white-space: nowrap;
@@ -249,9 +325,13 @@ export default {
         }
       }
     }
+    .changeSound {
+      padding: 0 0.2rem;
+      margin: 0.3rem 0;
+    }
     .cover {
       margin: 0 auto;
-      margin-top: 10vh;
+      margin-top: 15vh;
       width: 2.5rem;
       height: 2.5rem;
       img {
@@ -262,7 +342,6 @@ export default {
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 25vh;
     }
     .pgs {
       width: 70vw;
@@ -295,24 +374,31 @@ export default {
     .controls {
       width: 100%;
       padding: 0;
-      margin-top: 0.2rem;
+      margin: 0.3rem 0;
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
 
       & > i {
         font-size: 0.35rem;
       }
-    }
-    #playPause {
-      border: 0;
-      outline: 0;
-      padding: 0;
-      width: 0.5rem;
-      height: 0.5rem;
-      margin: 0 0.4rem;
-      font-size: 0.5rem;
-      background: none;
+      div {
+        text-align: center;
+        width: 0.25rem;
+        height: 0.25rem;
+        .iconfont {
+          font-size: 0.25rem;
+        }
+      }
+      #playPause {
+        border: 0;
+        outline: 0;
+        padding: 0;
+        width: 0.5rem;
+        height: 0.5rem;
+        font-size: 0.5rem;
+        background: none;
+      }
     }
 
     .played-time,
@@ -334,6 +420,57 @@ export default {
       align-items: center;
       padding: 0 0.1rem;
     }
+  }
+}
+.popup {
+  color: #000;
+  .playList {
+    height: 50vh;
+    overflow-y: auto;
+    ul {
+      li {
+        display: flex;
+        padding: 0 0.1rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        height: 0.5rem;
+        line-height: 0.5rem;
+        border-bottom: 1px solid #ccc;
+        &:last-child {
+          border-bottom: 0px;
+        }
+        &.now {
+          color: #ff00d1;
+        }
+        .name {
+          font-weight: 500;
+          font-size: 0.16rem;
+        }
+        .divide {
+          margin: 0 0.1rem;
+        }
+        .singer {
+          font-weight: 100;
+          font-size: 0.1rem;
+          span {
+            &::after {
+              content: "/";
+            }
+            &:last-child:after {
+              content: "";
+            }
+          }
+        }
+      }
+    }
+  }
+  .close {
+    height: 10vh;
+    font-weight: 500;
+    font-size: 0.16rem;
+    text-align: center;
+    line-height: 8vh;
   }
 }
 </style>

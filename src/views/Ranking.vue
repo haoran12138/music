@@ -3,7 +3,7 @@
     <div class="nav">
       <van-icon class="con" name="coupon" />
       <span class="title">排行榜</span>
-      <van-icon class="con" name="coupon" @click="showPlay(true)" />
+      <van-icon class="con" name="service-o" @click="showPlay(true)" />
     </div>
     <div class="officials">
       <h4>官方榜</h4>

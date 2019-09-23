@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <keep-alive>
-      <router-view></router-view>
+      <router-view :exclude="['SearchRes']"></router-view>
     </keep-alive>
     <player></player>
     <van-tabbar route>

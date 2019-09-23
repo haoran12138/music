@@ -8,7 +8,7 @@
         type="text"
         placeholder="搜索音乐、歌词、电台"
       />
-      <van-icon @click="showPlay(true)" class="con" name="coupon" />
+      <van-icon @click="showPlay(true)" class="con" name="service-o" />
     </div>
     <van-tabs v-model="tabName">
       <van-tab name="Recommend" title="个性推荐"></van-tab>

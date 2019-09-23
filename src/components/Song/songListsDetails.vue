@@ -18,7 +18,7 @@
       <div class="nav">
         <van-icon name="arrow-left" @click="$router.back(-1)" />
         <span class="title">歌单</span>
-        <van-icon class="con" @click="showPlay(true)" name="coupon" />
+        <van-icon class="con" @click="showPlay(true)" name="service-o" />
       </div>
       <div class="cover">
         <div class="bg">
@@ -47,7 +47,7 @@
       <div class="songs">
         <ul class="song">
           <li
-            @click="play({index:index,playList:list.trackIds})"
+            @click="play({index:index,playList:playList})"
             class="clear"
             v-for="(item, index) in list.tracks"
             :key="index"
@@ -136,6 +136,18 @@ export default {
       } else {
         return (count / 10000).toFixed(1) + "万";
       }
+    },
+    playList: function() {
+      let playList = [];
+      console.log("a");
+      this.list.tracks.forEach((item, index) => {
+        playList.push({
+          id: item.id,
+          name: item.name,
+          singer: item.ar
+        });
+      });
+      return playList;
     }
   },
   created() {

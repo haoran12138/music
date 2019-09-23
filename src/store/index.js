@@ -11,6 +11,8 @@ const store = new Vuex.Store({
     // 播放第几个
     playIndex: 0,
     playId: '',
+    // 播放模式  1:列表循环  2:单曲循环  3:随机播放
+    playMode: 1,
   },
 
   mutations: {
@@ -35,13 +37,25 @@ const store = new Vuex.Store({
     },
     // 下一首
     nextPlay(state) {
-      if (state.playIndex === state.playList.length - 1) {
-        // eslint-disable-next-line no-unused-expressions
+      const listLength = state.playList.length || 0;
+      if (state.playMode === 3) {
+        state.playIndex = Math.floor(Math.random() * listLength);
+      } else if (state.playIndex === listLength - 1) {
         state.playIndex = 0;
       } else {
         state.playIndex += 1;
       }
       state.playId = state.playList[state.playIndex].id;
+    },
+    changeIndex(state, payload) {
+      state.playIndex = payload;
+      state.playId = state.playList[state.playIndex].id;
+    },
+    changePlayMode(state) {
+      state.playMode += 1;
+      if (state.playMode === 4) {
+        state.playMode = 1;
+      }
     },
   },
   // actions中存储一些异步操作的内容

@@ -12,15 +12,19 @@
         <ul class="song">
           <li
             class="clear"
-            @click="play({index:index,playList:list.trackIds})"
-            v-for="(item, index) in list.tracks"
+            @click="$router.push({ name: 'SearchRes', query:{keyword:item.searchWord}})"
+            v-for="(item, index) in list"
             :key="index"
           >
             <div class="ranking">{{ index+1 }}</div>
-            <div class="content">
+            <div class="detail">
               <div class="info">
-                <p class="songName">{{ item.name }}</p>
-                <p class="singer">{{item.ar[0].name}}---{{ item.al.name }}</p>
+                <div class="searchWord">
+                  {{ item.searchWord }}
+                  <span class="score">{{ item.score }}</span>
+                  <span class="iconType" v-if="item.iconType">HOT</span>
+                </div>
+                <div class="content">{{item.content}}</div>
               </div>
             </div>
           </li>
@@ -69,9 +73,9 @@ export default {
   created() {
     axios({
       type: "get",
-      url: `http://47.104.88.123:3000/top/list?idx=1`
+      url: `http://47.104.88.123:3000/search/hot/detail`
     }).then(res => {
-      this.list = res.data.playlist;
+      this.list = res.data.data;
     });
   },
   watch: {
@@ -85,6 +89,12 @@ export default {
         });
       }
     }
+  },
+  activated() {
+    document.querySelector("input.search").focus();
+  },
+  deactivated() {
+    this.value = "";
   }
 };
 </script>
@@ -126,7 +136,7 @@ export default {
       line-height: 0.5rem;
       color: #999;
     }
-    .content {
+    .detail {
       float: right;
       width: 3.25rem;
       height: 0.5rem;
@@ -135,16 +145,27 @@ export default {
         height: 0.5rem;
         width: 2.5rem;
         float: left;
-        .songName {
+        .searchWord {
           font-size: 0.16rem;
           line-height: 0.3rem;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
+          .score {
+            font-size: 0.1rem;
+            color: #ccc;
+            margin: 0 0.1rem;
+          }
+          .iconType {
+            color: #f01e1e;
+            font-size: 0.1rem;
+            font-weight: 600;
+            font-style: italic;
+          }
         }
-        .singer {
+        .content {
           font-size: 0.12rem;
-          color: #ccc;
+          color: #8e8e8e;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;

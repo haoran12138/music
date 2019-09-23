@@ -5,7 +5,7 @@
       <div class="nav">
         <van-icon name="arrow-left" @click="$router.back(-1)" />
         <span class="title">排行榜</span>
-        <van-icon class="con"  @click="showPlay(true)" name="coupon" />
+        <van-icon class="con" @click="showPlay(true)" name="service-o" />
       </div>
       <div class="cover">
         <div class="bg">
@@ -27,7 +27,7 @@
         <ul class="song">
           <li
             class="clear"
-            @click="play({index:index,playList:list.trackIds})"
+            @click="play({index:index,playList:playList})"
             v-for="(item, index) in list.tracks"
             :key="index"
           >
@@ -71,7 +71,7 @@ export default {
         this.list = res.data.playlist;
       });
     },
-    ...mapMutations(["play","showPlay"])
+    ...mapMutations(["play", "showPlay"])
   },
   computed: {
     // 评论数量
@@ -100,6 +100,17 @@ export default {
       } else {
         return (count / 10000).toFixed(1) + "万";
       }
+    },
+    playList: function() {
+      let playList = [];
+      this.list.tracks.forEach((item, index) => {
+        playList.push({
+          id: item.id,
+          name: item.name,
+          singer: item.ar
+        });
+      });
+      return playList;
     }
   },
   created() {

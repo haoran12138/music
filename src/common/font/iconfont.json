@@ -1,0 +1,37 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "8201937",
+      "name": "单曲循环 - 网易icon",
+      "font_class": "danquxunhuan",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "9167280",
+      "name": "随机循环",
+      "font_class": "suijixunhuan",
+      "unicode": "e502",
+      "unicode_decimal": 58626
+    },
+    {
+      "icon_id": "9605700",
+      "name": "播放列表",
+      "font_class": "bofangliebiao",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "9941421",
+      "name": "循环播放 - 网易icon",
+      "font_class": "-lbxh",
+      "unicode": "e501",
+      "unicode_decimal": 58625
+    }
+  ]
+}
