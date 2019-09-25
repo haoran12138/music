@@ -24,7 +24,11 @@
     <div class="playlist">
       <h3>独家放送</h3>
       <div class="toMove">
-        <figure v-for="item in toMove" :key="item.id">
+        <figure
+          v-for="item in toMove"
+          :key="item.id"
+          @click="$router.push({name:'mvplayer',query:{id:item.id}})"
+        >
           <img v-lazy="item.cover" alt />
           <figcaption>
             {{ item.name }}
@@ -45,7 +49,11 @@
     <div class="playlist">
       <h3>推荐MV</h3>
       <div class="personalizedMv">
-        <figure v-for="item in personalizedMv" :key="item.id">
+        <figure
+          v-for="item in personalizedMv"
+          :key="item.id"
+          @click="$router.push({name:'mvplayer',query:{id:item.id} })"
+        >
           <img v-lazy="item.picUrl" :src="item.picUrl" alt />
           <figcaption>{{ item.name }}</figcaption>
         </figure>
