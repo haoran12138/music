@@ -6,9 +6,14 @@ import Ranking from './views/Ranking.vue';
 import Mine from './views/Mine.vue';
 import Account from './views/Account.vue';
 import Search from './views/Search.vue';
-import SearchRes from './views/SearchRes.vue';
+import Singer from './views/Singer.vue';
+import Singerdetail from './views/Singerdetail.vue';
+import Singerlist from './views/Singerlist.vue';
+import Singersort from './views/Singersort.vue';
+import SearchRes from './components/Search/SearchRes.vue';
 import ListDetails from './components/Ranking/ListDetails.vue';
 import SongListsDetails from './components/Song/songListsDetails.vue';
+import MVplayer from './components/Play/mvplayer.vue'
 
 Vue.use(Router);
 
@@ -51,6 +56,12 @@ export default new Router({
       name: 'SongListsDetails',
     },
     {
+      // 歌手详情
+      path: '/singer',
+      component: Singer,
+      name: 'Singer',
+    },
+    {
       // 首页搜索
       path: '/search',
       component: Search,
@@ -62,5 +73,29 @@ export default new Router({
       component: SearchRes,
       name: 'SearchRes',
     },
+    {
+      // 歌手详情页
+      path: "/singerdetail",
+      component: Singerdetail,
+      name: "Singerdetail"
+    },
+    {
+      // 歌手分类列表
+      path: "/singerlist",
+      component: Singerlist,
+      name: "Singerlist"
+    },
+    {
+      // MV
+      path: "/mvplayer",
+      component: MVplayer,
+      name: "mvplayer"
+    },
+    {
+      // 歌手分类
+      path: "/singersort",
+      component: Singersort,
+      name: "Singersort"
+    }
   ],
 });

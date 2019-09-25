@@ -1,7 +1,11 @@
 <template>
   <div class="singer">
     <ul>
-      <li v-for="(singer,index) in singerList" :key="index">
+      <li
+        v-for="(singer,index) in singerList"
+        :key="index"
+        @click="$router.push({ name: 'Singerdetail', query:{id:singer.id}})"
+      >
         <div class="avatar">
           <img v-if="singer.picUrl" :src="singer.picUrl" alt />
           <img v-else :src="singer.img1v1Url" alt />

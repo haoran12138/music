@@ -46,23 +46,16 @@
       </div>
       <div class="songs">
         <ul class="song">
-          <li
-            @click="play({index:index,playList:playList})"
-            class="clear"
-            v-for="(item, index) in list.tracks"
-            :key="index"
-          >
+          <li class="clear" v-for="(item, index) in list.tracks" :key="index">
             <div class="ranking">{{ index+1 }}</div>
             <div class="content">
-              <div class="info">
+              <div class="info" @click="play({index:index,playList:playList})">
                 <p class="songName">{{ item.name }}</p>
                 <p class="singer">{{item.ar[0].name}}---{{ item.al.name }}</p>
               </div>
-              <div class="operate">
+              <div class="operate" @click="$router.push({name:'mvplayer',query:{id:item.mv} })">
                 <div class="mv" v-if="item.mv">
-                  <router-link :to="{name:'',query:'item.mvD'}">
-                    <van-icon name="video-o" />
-                  </router-link>
+                  <van-icon name="video-o" />
                 </div>
               </div>
             </div>
@@ -139,7 +132,6 @@ export default {
     },
     playList: function() {
       let playList = [];
-      console.log("a");
       this.list.tracks.forEach((item, index) => {
         playList.push({
           id: item.id,
@@ -278,9 +270,9 @@ export default {
   }
 }
 .songs {
+  overflow: hidden;
   width: 100%;
   padding-top: 0.1rem;
-  height: 4rem;
   background: #fff;
   .song {
     height: 0.5rem;

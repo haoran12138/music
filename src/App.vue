@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view :exclude="['SearchRes']"></router-view>
+    <keep-alive :exclude="['SearchRes','mvplayer']">
+      <router-view></router-view>
     </keep-alive>
     <player></player>
     <van-tabbar route>
@@ -22,6 +22,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app {
-}
 </style>

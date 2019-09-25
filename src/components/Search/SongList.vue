@@ -29,6 +29,7 @@ export default {
 .songlist {
   width: 100%;
   padding-top: 0.1rem;
+  padding-bottom: 50px;
   overflow: hidden;
   background: #fff;
 }

@@ -7,7 +7,7 @@
       <span></span>
     </div>
     <div v-show="!value" class="default">
-      <div class="sort">歌手分类 ></div>
+      <div class="sort" @click="$router.push({name:'Singersort'})">歌手分类 ></div>
       <div class="songs">
         <ul class="song">
           <li
@@ -53,7 +53,6 @@
 // @ is an alias to /src
 
 import axios from "axios";
-import { mapMutations } from "vuex";
 export default {
   name: "search",
   data() {
@@ -62,13 +61,6 @@ export default {
       list: {},
       value: ""
     };
-  },
-  components: {},
-  methods: {
-    ...mapMutations(["play", "showPlay"]),
-    onCancel() {
-      console.log("a");
-    }
   },
   created() {
     axios({

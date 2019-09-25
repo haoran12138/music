@@ -20,9 +20,9 @@
 <script>
 // @ is an alias to /src
 
-import Songs from "../components/Search/Songs.vue";
-import Singer from "../components/Search/Singer.vue";
-import SongList from "../components/Search/SongList.vue";
+import Songs from "./Songs.vue";
+import Singer from "./Singer.vue";
+import SongList from "./SongList.vue";
 import { mapMutations } from "vuex";
 export default {
   name: "searchres",

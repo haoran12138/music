@@ -6,7 +6,7 @@
       </div>
       <div class="main">
         <div class="header">
-          <van-icon class="down" name="arrow-down" size="0.2rem" @click="showPlay(false)" />
+          <van-icon class="down" name="arrow-down" size="0.25rem" @click="showPlay(false)" />
           <div class="songInfo">
             <div class="song">{{songs.name}}</div>
             <div class="singer">
@@ -20,6 +20,7 @@
         <div class="cover">
           <img :src="songs.al.picUrl" alt />
         </div>
+
         <div class="Audio">
           <audio id="audioTag" :src="url"></audio>
           <div class="schedule">
@@ -45,11 +46,14 @@
           </div>
         </div>
       </div>
+
       <van-popup
         round
         position="bottom"
         :style="{ height: '60vh',width:'100%',background:'rgba(255, 255,255, 0.86)' }"
         v-model="showPlayList"
+        :lazy-render="false"
+        @opened="opened"
       >
         <div class="popup">
           <div class="playList">
@@ -77,6 +81,7 @@ export default {
   name: "player",
   data() {
     return {
+      // 我自己喜欢的默认歌曲
       url: "",
       songs: {
         al: {
@@ -90,7 +95,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isShow", "playList", "playId", "playMode", "playIndex"]),
+    ...mapState([
+      "isShow",
+      "playList",
+      "playId",
+      "playMode",
+      "playIndex",
+      "isPlay"
+    ]),
     playModeUrl() {
       return `./${this.playMode}.png`;
     }
@@ -113,15 +125,19 @@ export default {
       this.modeClassName = "iconfont " + ModeClass[this.playMode - 1];
     },
     // 列表显示播放到第几个
-    playListNow() {
+    now() {
+      const _this = this;
       $(".playList li")
         .eq(this.playIndex)
         .addClass("now")
         .siblings()
         .removeClass("now");
-      var top = $(".playList li").eq(this.playIndex).position().top;
-
-      console.log(scrollTop);
+    },
+    opened() {
+      var nowTop = $(".playList li")
+        .eq(this.playIndex)
+        .position().top;
+      $(".playList").animate({ scrollTop: nowTop + "px" }, 300);
     }
   },
   created() {
@@ -199,7 +215,6 @@ export default {
         _this.nextPlay();
       }
     }
-    this.playListNow();
   },
   watch: {
     // 监听id 是否改变 切换歌曲
@@ -224,7 +239,7 @@ export default {
         _this.url = res.data.data[0].url;
         setTimeout(() => {
           $("#playPause").click();
-          _this.playListNow();
+          _this.now();
         }, 1000);
       });
       // 获得歌曲信息
@@ -246,6 +261,19 @@ export default {
     // 监听音量改变
     sound: function() {
       $("#audioTag").get(0).volume = this.sound / 100;
+    },
+    isPlay() {
+      if (this.url === "") {
+        return;
+      }
+      var audio = document.getElementsByTagName("audio")[0];
+      if (this.isPlay) {
+        audio.play();
+        this.iconName = "pause-circle-o";
+      } else {
+        audio.pause();
+        this.iconName = "play-circle-o";
+      }
     }
   }
 };
@@ -305,7 +333,7 @@ export default {
         text-align: center;
         .song {
           font-weight: 400;
-          font-size: 0.2rem;
+          font-size: 0.18rem;
           line-height: 0.25rem;
           overflow: hidden;
           white-space: nowrap;
@@ -316,6 +344,7 @@ export default {
           white-space: nowrap;
           text-overflow: ellipsis;
           font-size: 0.1rem;
+          color: rgba(255, 255, 255, 0.8);
           span:after {
             content: "/";
           }
@@ -428,6 +457,7 @@ export default {
     height: 50vh;
     overflow-y: auto;
     ul {
+      position: relative;
       li {
         display: flex;
         padding: 0 0.1rem;
@@ -446,6 +476,10 @@ export default {
         .name {
           font-weight: 500;
           font-size: 0.16rem;
+          width: 60%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
         }
         .divide {
           margin: 0 0.1rem;
@@ -453,6 +487,10 @@ export default {
         .singer {
           font-weight: 100;
           font-size: 0.1rem;
+          width: 30%;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
           span {
             &::after {
               content: "/";
