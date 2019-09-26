@@ -98,7 +98,7 @@
 
 
 <script>
-//数据接口前缀  http://47.104.88.123:3000/
+import { mapMutations } from "vuex";
 import axios from "axios";
 export default {
   name: "mine",
@@ -108,7 +108,9 @@ export default {
       myplaylist: []
     };
   },
-  methods: {},
+  methods: {
+    ...mapMutations(["showPlay"])
+  },
   created() {
     let id = JSON.parse(localStorage.getItem("id"));
     axios({
