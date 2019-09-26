@@ -261,7 +261,7 @@ export default {
     }
     .content {
       float: right;
-      width: 3.25rem;
+      width: 3rem;
       height: 0.5rem;
       padding-left: 0.1rem;
       border-top: 1px solid #ccc;

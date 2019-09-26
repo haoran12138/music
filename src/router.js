@@ -14,7 +14,13 @@ import SearchRes from './components/Search/SearchRes.vue';
 import ListDetails from './components/Ranking/ListDetails.vue';
 import SongListsDetails from './components/Song/songListsDetails.vue';
 import Albumdetail from './components/Song/albumdetail.vue';
-import MVplayer from './components/Play/mvplayer.vue'
+import MVplayer from './components/Play/mvplayer.vue';
+import Login from './components/Account/Login.vue';
+import Register from './components/Account/Register.vue';
+import Concern from './components/Account/Concern.vue';
+import Fen from './components/Account/Fen.vue';
+import About from './components/Account/About.vue';
+import Mymessage from './components/Account/Mymessage.vue';
 
 Vue.use(Router);
 
@@ -37,6 +43,15 @@ export default new Router({
       path: '/mine',
       component: Mine,
       name: 'Mine',
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem('id')) {
+          next();
+        }else{
+          next({
+            name:'Login'
+          });
+        }
+      },
     },
     {
       // 账户
@@ -76,33 +91,69 @@ export default new Router({
     },
     {
       // 歌手详情页
-      path: "/singerdetail",
+      path: '/singerdetail',
       component: Singerdetail,
-      name: "Singerdetail"
+      name: 'Singerdetail',
     },
     {
       // 歌手分类列表
-      path: "/singerlist",
+      path: '/singerlist',
       component: Singerlist,
-      name: "Singerlist"
+      name: 'Singerlist',
     },
     {
       // MV
-      path: "/mvplayer",
+      path: '/mvplayer',
       component: MVplayer,
-      name: "mvplayer"
+      name: 'mvplayer',
     },
     {
       // 歌手分类
-      path: "/singersort",
+      path: '/singersort',
       component: Singersort,
-      name: "Singersort"
+      name: 'Singersort',
     },
     {
       // 专辑详情
-      path: "/albumdetail",
+      path: '/albumdetail',
       component: Albumdetail,
-      name: "Albumdetail"
+      name: 'Albumdetail',
+    },
+
+    {
+      // 邮箱登录
+      path: '/login',
+      component: Login,
+      name: 'Login',
+    },
+    {
+      // 关注
+      path: '/concern',
+      component: Concern,
+      name: 'Concern',
+    },
+    {
+      // 粉丝
+      path: '/fen',
+      component: Fen,
+      name: 'Fen',
+    },
+    {
+      // 关于
+      path: '/about',
+      component: About,
+      name: 'About',
+    },
+    {
+      // 我的消息
+      path: '/mymessage',
+      component: Mymessage,
+      name: 'Mymessage',
+    },
+    {
+      path: '/register',
+      component: Register,
+      name: 'Register',
     },
   ],
 });

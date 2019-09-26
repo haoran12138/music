@@ -167,7 +167,6 @@ export default {
   transform: translateX(100vw);
 }
 .songListsDetails {
-  padding: 0.45rem 0 50px;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -297,7 +296,7 @@ export default {
     }
     .content {
       float: right;
-      width: 3.25rem;
+      width: 3rem;
       height: 0.5rem;
       padding-left: 0.1rem;
       border-top: 1px solid #ccc;

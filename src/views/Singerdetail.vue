@@ -7,11 +7,7 @@
       <van-icon class="con" @click="showPlay(true)" name="service-o" />
     </div>
     <div class="pictop">
-      <van-image width="100%" :src="singerdetail.picUrl">
-        <template v-slot:loading>
-          <van-loading type="spinner" size="20" />
-        </template>
-      </van-image>
+      <img width="100%" :src="singerdetail.picUrl" />
     </div>
     <van-tabs v-model="tabName">
       <van-tab name="hot" title="热门"></van-tab>
