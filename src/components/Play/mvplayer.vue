@@ -106,12 +106,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.mvplayer {
-  margin-bottom: 0.5rem;
-}
-.player {
-  margin-top: 0.5rem;
-}
 
 .content {
   margin: 0.2rem 0;

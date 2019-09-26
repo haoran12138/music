@@ -31,12 +31,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .description {
-  overflow: scroll;
-  margin-top: 2.5rem;
-  margin-bottom: 0.5rem;
+  padding: 0.1rem 0.2rem 50px;
 }
 .descs {
-  font-size: 0.1rem;
+  font-size: 0.12rem;
+  line-height: 0.2rem;
   text-indent: 2em;
   color: #333;
 }

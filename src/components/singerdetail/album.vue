@@ -1,8 +1,12 @@
 <template>
   <div class="album">
     <div class="songlist">
-      <div :key="index" v-for="(item,index) in albumlist" class="content-top">
-        <span class="content-index">{{index+1}}</span>
+      <div
+        :key="index"
+        v-for="(item,index) in albumlist"
+        class="content-top"
+        @click="$router.push({name:'Albumdetail',query:{id:item.id}})"
+      >
         <img :src="item.picUrl" alt />
         <div class="namecontent">
           <div class="nametop">{{item.name}}</div>
@@ -37,26 +41,19 @@ export default {
   margin-top: 0.2rem;
 }
 .content-top {
-  height: 0.6rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding-left: 0.1rem;
+  margin-top: 0.2rem;
   color: rgb(53, 52, 52);
   img {
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 1rem;
     margin-left: 0.1rem;
   }
   .namecontent {
-    flex: 1;
-    box-sizing: border-box;
-    height: 0.6rem;
     margin-left: 0.1rem;
     font-size: 0.17rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
     .namebottom {
       font-size: 0.1rem;
       color: #cecece;

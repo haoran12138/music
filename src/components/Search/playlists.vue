@@ -1,22 +1,15 @@
 <template>
-  <div class="singer">
+  <div class="playlists">
     <ul>
       <li
-        v-for="(singer,index) in singerList"
+        v-for="(item,index) in playlists"
         :key="index"
-        @click="$router.push({ name: 'Singerdetail', query:{id:singer.id}})"
+        @click="$router.push({ name: 'SongListsDetails', query:{id:item.id}})"
       >
-        <div class="avatar">
-          <img v-if="singer.picUrl" :src="singer.picUrl" alt />
-          <img v-else :src="singer.img1v1Url" alt />
+        <div class="cover">
+          <img :src="item.coverImgUrl" alt />
         </div>
-        <div class="name">
-          {{ singer.name }}
-          <span
-            v-if="singer.alia"
-            class="alia"
-          >({{singer.alia[singer.alia.length-1]}})</span>
-        </div>
+        <div class="name">{{ item.name }}</div>
       </li>
     </ul>
   </div>
@@ -24,22 +17,22 @@
 <script>
 import axios from "axios";
 export default {
-  name: "singer",
+  name: "songlist",
   data() {
     return {
       keyword: this.$route.query.keyword,
-      singerList: []
+      playlists: []
     };
   },
   methods: {
     update() {
       this.keyword = this.$route.query.keyword;
-      this.singerList = [];
+      this.playlists = [];
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/search?type=100&keywords=${this.$route.query.keyword}`
+        url: `http://47.104.88.123:3000/search?type=1000&keywords=${this.$route.query.keyword}`
       }).then(res => {
-        this.singerList = res.data.result.artists;
+        this.playlists = res.data.result.playlists;
       });
     }
   },
@@ -54,26 +47,23 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.singer {
+.playlists {
   width: 100%;
   padding-top: 0.1rem;
   overflow: hidden;
   background: #fff;
   ul {
     li {
+      margin-top: 0.2rem;
+      height: 1rem;
       display: flex;
       align-items: center;
-      height: 0.8rem;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      .avatar {
-        width: 0.5rem;
-        height: 0.5rem;
+      .cover {
         img {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
+          width: 1rem;
         }
       }
       .name {

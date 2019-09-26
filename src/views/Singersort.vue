@@ -65,8 +65,6 @@ export default {
   }
 }
 .sortcontent {
-  padding-top: 0.6rem;
-  padding-bottom: 0.5rem;
   .content {
     color: rgb(184, 176, 176);
     padding: 0 0.4rem;

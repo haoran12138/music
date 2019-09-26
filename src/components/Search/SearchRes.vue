@@ -8,8 +8,8 @@
     <van-tabs v-model="tabName">
       <van-tab name="Songs" title="歌曲"></van-tab>
       <van-tab name="Singer" title="歌手"></van-tab>
-      <van-tab name="SongList" title="歌单"></van-tab>
-      <van-tab name="mv" title="视频">没写</van-tab>
+      <van-tab name="playlists" title="歌单"></van-tab>
+      <van-tab name="mvs" title="MV"></van-tab>
     </van-tabs>
     <keep-alive>
       <component v-bind:is="tabName"></component>
@@ -22,7 +22,8 @@
 
 import Songs from "./Songs.vue";
 import Singer from "./Singer.vue";
-import SongList from "./SongList.vue";
+import playlists from "./playlists.vue";
+import mvs from "./mvs.vue";
 import { mapMutations } from "vuex";
 export default {
   name: "searchres",
@@ -34,7 +35,8 @@ export default {
   components: {
     Songs,
     Singer,
-    SongList
+    playlists,
+    mvs
   },
   methods: {
     ...mapMutations(["showPlay"])
@@ -42,7 +44,4 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.searchRes {
-  padding-top: 0.4rem;
-}
 </style>

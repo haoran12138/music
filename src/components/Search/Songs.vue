@@ -74,7 +74,6 @@ export default {
   overflow: hidden;
   background: #fff;
   ul {
-    padding: 0 0.2rem;
     li:first-child {
       .content {
         border: 0;

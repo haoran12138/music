@@ -91,9 +91,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.searchList {
-  padding-top: 0.4rem;
-}
+
 .sort {
   display: flex;
   justify-content: center;
@@ -130,7 +128,7 @@ export default {
     }
     .detail {
       float: right;
-      width: 3.25rem;
+      width: 3rem;
       height: 0.5rem;
       padding-left: 0.1rem;
       .info {

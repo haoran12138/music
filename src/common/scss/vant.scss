@@ -28,7 +28,8 @@
 	}
 }
 
-.songListsDetails {
+.songListsDetails,
+.albumdetail {
 	.van-overlay {
 		background: #fff;
 	}
@@ -44,9 +45,9 @@
 		height: 0.1rem;
 	}
 }
-#app{
+#app {
 	// 底部下面好像有条缝
-	.van-tabbar--fixed{
+	.van-tabbar--fixed {
 		bottom: -1px;
 	}
 }

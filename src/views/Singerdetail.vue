@@ -70,12 +70,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-img {
-  display: block;
-}
-.singerdetail {
-  padding-bottom: 50px;
-}
+
 .pictop {
   margin-top: 0.3rem;
   overflow: hidden;

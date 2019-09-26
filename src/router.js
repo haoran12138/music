@@ -13,6 +13,7 @@ import Singersort from './views/Singersort.vue';
 import SearchRes from './components/Search/SearchRes.vue';
 import ListDetails from './components/Ranking/ListDetails.vue';
 import SongListsDetails from './components/Song/songListsDetails.vue';
+import Albumdetail from './components/Song/albumdetail.vue';
 import MVplayer from './components/Play/mvplayer.vue'
 
 Vue.use(Router);
@@ -96,6 +97,12 @@ export default new Router({
       path: "/singersort",
       component: Singersort,
       name: "Singersort"
-    }
+    },
+    {
+      // 专辑详情
+      path: "/albumdetail",
+      component: Albumdetail,
+      name: "Albumdetail"
+    },
   ],
 });

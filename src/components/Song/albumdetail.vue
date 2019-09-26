@@ -1,31 +1,40 @@
 <template>
-  <!-- 排行榜详情 -->
+  <!-- 专辑详情 -->
   <transition name="fade">
-    <div class="listDetails">
+    <div class="albumdetail">
+      <!-- 遮罩层 -->
+      <van-overlay z-index="96" custom-style="background-color:#fff" v-show="show" />
+      <div class="overlay" v-show="show">
+        <van-overlay z-index="98" custom-style="background-color:#fff" v-show="show" />
+        <button @click="onClickHide">x</button>
+        <img :src="album.picUrl" alt />
+        <p class="name">{{ album.name }}</p>
+        <p class="description">{{ album.description }}</p>
+      </div>
+      <!-- 遮罩层结束 -->
       <div class="nav">
         <van-icon name="arrow-left" @click="$router.back(-1)" />
-        <span class="title">排行榜</span>
+        <span class="title">专辑</span>
         <van-icon class="con" @click="showPlay(true)" name="service-o" />
       </div>
       <div class="cover">
         <div class="bg">
-          <img :src="list.coverImgUrl" alt />
+          <img :src="album.picUrl" alt />
         </div>
         <div class="coverImg">
-          <img :src="list.coverImgUrl" alt />
-        </div>
-        <div>
-          <van-grid clickable :column-num="4">
-            <van-grid-item icon="star-o" :text="getTrackCount" />
-            <van-grid-item icon="comment-o" :text="getCommentCount" />
-            <van-grid-item icon="share" :text="getShareCount" />
-            <van-grid-item icon="down" text="下载" />
-          </van-grid>
+          <img @click="onClickShow" :src="album.picUrl" alt />
+          <div class="info">
+            <p class="name">{{ album.name}}</p>
+            <div class="avatar">
+              <img :src="album.artist.picUrl" alt />
+              <span>{{album.artist.name}}</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="songs clear">
+      <div class="songs">
         <ul class="song">
-          <li class="clear" v-for="(item, index) in list.tracks" :key="index">
+          <li class="clear" v-for="(item, index) in songs" :key="index">
             <div class="ranking">{{ index+1 }}</div>
             <div class="content">
               <div class="info" @click="play({index:index,playList:playList})">
@@ -48,55 +57,50 @@
 import axios from "axios";
 import { mapMutations } from "vuex";
 export default {
-  name: "listdetails",
+  name: "albumdetail",
   data() {
     return {
-      xid: this.$route.query.xid,
-      list: {}
+      id: this.$route.query.id,
+      songs: [
+        {
+          al: {},
+          ar: [{ name: "" }]
+        }
+      ],
+      album: { artist: {} },
+      show: false
     };
   },
   methods: {
     updateList: function() {
+      this.songs = [
+        {
+          al: {},
+          ar: [{ name: "" }]
+        }
+      ];
+      this.album = { artist: {} };
+      this.show = false;
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/top/list?idx=${this.xid}`
+        url: `http://47.104.88.123:3000/album?id=${this.id}`
       }).then(res => {
-        this.list = res.data.playlist;
+        this.songs = res.data.songs;
+        this.album = res.data.album;
       });
+    },
+    onClickShow() {
+      this.show = true;
+    },
+    onClickHide() {
+      this.show = false;
     },
     ...mapMutations(["play", "showPlay"])
   },
   computed: {
-    // 评论数量
-    getCommentCount: function() {
-      var count = this.list.commentCount;
-      if (count < 100000) {
-        return count + "";
-      } else {
-        return (count / 10000).toFixed(1) + "万";
-      }
-    },
-    // 分享数量
-    getShareCount: function() {
-      var count = this.list.shareCount;
-      if (count < 100000) {
-        return count + "";
-      } else {
-        return (count / 10000).toFixed(1) + "万";
-      }
-    },
-    // 收藏数量
-    getTrackCount: function() {
-      var count = this.list.trackCount;
-      if (count < 100000) {
-        return count + "";
-      } else {
-        return (count / 10000).toFixed(1) + "万";
-      }
-    },
     playList: function() {
       let playList = [];
-      this.list.tracks.forEach((item, index) => {
+      this.songs.forEach((item, index) => {
         playList.push({
           id: item.id,
           name: item.name,
@@ -111,10 +115,9 @@ export default {
   },
   // 当keep-aliver切换到当前组件时执行
   activated() {
-    if (this.xid != this.$route.query.xid) {
-      // 当xid改变时 更新数据
-      this.xid = this.$route.query.xid;
-      this.list = {};
+    if (this.id != this.$route.query.id) {
+      // 当id改变时 更新数据
+      this.id = this.$route.query.id;
       this.updateList();
     }
   }
@@ -128,24 +131,96 @@ export default {
 .fade-leave-to {
   transform: translateX(100vw);
 }
-.listDetails {
+.albumdetail {
+  padding: 0.45rem 0 50px;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: 100%;
 }
+.overlay {
+  position: absolute;
+  top: 0;
+  z-index: 97;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    position: absolute;
+    z-index: 99;
+    top: 0.1rem;
+    right: 0.1rem;
+    background: rgba(255, 255, 255, 0);
+    border: 0;
+    font-size: 0.25rem;
+  }
+  img {
+    margin-top: 0.5rem;
+    width: 50%;
+  }
+  .name {
+    font-size: 0.14rem;
+    line-height: 0.5rem;
+  }
+  .description {
+    font-size: 0.12rem;
+    line-height: 0.2rem;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 15;
+    line-clamp: 15;
+    -webkit-box-orient: vertical;
+  }
+  .tags {
+    span {
+      display: inline-block;
+      margin: 0.1rem 0.05rem;
+      padding: 0.02rem 0.04rem;
+      border-radius: 0.5rem;
+      font-size: 0.12px;
+      color: orange;
+      border: 1px solid orange;
+    }
+  }
+}
+
 .cover {
   width: 100%;
-  height: 2.5rem;
   padding: 0.1rem;
   position: relative;
   background: rgba(250, 238, 238, 0.527);
 
   .coverImg {
-    width: 1.5rem;
     height: 1.5rem;
+    overflow: hidden;
     img {
-      width: 100%;
-      height: 100%;
+      width: 1.5rem;
+      height: 1.5rem;
+      float: left;
+    }
+    .info {
+      padding: 0.1rem;
+      float: right;
+      width: 2rem;
+      .name {
+        font-size: 0.14rem;
+      }
+      .avatar {
+        margin-top: 0.3rem;
+        margin-left: 0.1rem;
+        img {
+          width: 0.3rem;
+          height: 0.3rem;
+          border-radius: 50%;
+        }
+        span {
+          margin-left: 0.1rem;
+          font-size: 0.13rem;
+        }
+      }
     }
   }
   .bg {
@@ -159,6 +234,7 @@ export default {
   }
 }
 .songs {
+  overflow: hidden;
   width: 100%;
   padding-top: 0.1rem;
   background: #fff;
@@ -185,7 +261,7 @@ export default {
     }
     .content {
       float: right;
-      width: 3rem;
+      width: 3.25rem;
       height: 0.5rem;
       padding-left: 0.1rem;
       border-top: 1px solid #ccc;

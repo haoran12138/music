@@ -305,7 +305,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100vh;
-    filter: blur(10px);
+    filter: blur(14px);
     img {
       width: 100vh;
     }
@@ -318,7 +318,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(153, 153, 153, 0.6);
+    background: rgba(153, 153, 153, 0.25);
     .header {
       .down {
         float: left;

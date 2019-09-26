@@ -22,4 +22,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#app {
+  padding: 0.4rem 0.1rem 50px;
+}
 </style>

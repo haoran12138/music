@@ -48,9 +48,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.singerlist {
-  margin-bottom: 50px;
-}
+
 .singer-top {
   width: 100%;
   position: fixed;
@@ -71,7 +69,6 @@ export default {
   margin-top: 0.5rem;
 }
 ul {
-  padding: 0 0.2rem;
   li {
     display: flex;
     align-items: center;

@@ -60,6 +60,6 @@ export default {
   opacity: 0;
 }
 .home {
-  padding: 0.4rem 0.1rem 50px;
+
 }
 </style>

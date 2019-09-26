@@ -21,7 +21,6 @@ export default {
 <style lang="scss" scoped>
 .lists {
   overflow: hidden;
-  margin-top: 0.4rem;
 }
 h4 {
   font-weight: 500;

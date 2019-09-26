@@ -118,9 +118,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.ranking {
-  padding: 0.5rem 0.1rem 100px;
-}
+
 
 .officials {
   margin-top: 0.1rem;
