@@ -116,7 +116,6 @@ export default {
     axios({
       url: `http://47.104.88.123:3000/user/playlist?uid=${id}`
     }).then(res => {
-      console.log(res);
       res.data.playlist.forEach((item, index) => {
         if (item.ordered) {
           this.playlist.push(item);

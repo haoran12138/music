@@ -57,7 +57,6 @@ export default {
           url: `http://47.104.88.123:3000/login?email=${this.email}&password=${this.password}`
         })
           .then(res => {
-            console.log(res);
             this.id = res.data.account.id;
             localStorage.setItem("id", JSON.stringify(this.id));
             this.$router.push({
