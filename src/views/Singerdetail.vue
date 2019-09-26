@@ -70,7 +70,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
 .pictop {
   margin-top: 0.3rem;
   overflow: hidden;
@@ -78,5 +77,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 2.4rem;
 }
 </style>

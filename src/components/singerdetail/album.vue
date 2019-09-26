@@ -46,6 +46,7 @@ export default {
   justify-content: flex-start;
   padding-left: 0.1rem;
   margin-top: 0.2rem;
+  height: 1rem;
   color: rgb(53, 52, 52);
   img {
     width: 1rem;

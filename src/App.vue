@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive :exclude="['SearchRes','mvplayer']">
+    <keep-alive :exclude="['SearchRes','mvplayer','singerdetail']">
       <router-view></router-view>
     </keep-alive>
     <player></player>
