@@ -7,13 +7,13 @@
 
     <section>
       <!-- 第一块 -->
-      <div class="personlist">
+      <div class="person">
         <div class="per-top">
           <figure>
-            <img :src="personlist.avatarUrl?personlist.avatarUrl:defaultimg" />
+            <img :src="person.avatarUrl?person.avatarUrl:defaultimg" />
             <figcaption v-if="isShow">
-              <h2>{{personlist.nickname}}</h2>
-              <p>{{personlist.signature}}</p>
+              <h2>{{person.nickname}}</h2>
+              <p>{{person.signature}}</p>
               <em>Lv.{{level}}</em>
             </figcaption>
             <div v-if="!isShow" class="nologin">
@@ -33,11 +33,11 @@
           </li>
           <li @click="concern">
             <h2>关注</h2>
-            <span>{{personlist.follows}}</span>
+            <span>{{person.follows}}</span>
           </li>
           <li>
             <h2 @click="fen">粉丝</h2>
-            <span>{{personlist.followeds}}</span>
+            <span>{{person.followeds}}</span>
           </li>
           <li class="per-teshu">
             <h2>我的资料</h2>
@@ -136,7 +136,7 @@
       </article>
       <!-- 第五块 -->
       <article>
-        <van-button class="person" @click="loginOut">退出登录</van-button>
+        <van-button class="loginOut" @click="loginOut">退出登录</van-button>
       </article>
     </section>
   </div>
@@ -144,7 +144,6 @@
  <script>
 import { Toast } from "vant";
 import axios from "axios";
-
 // @ is an alias to /src
 
 export default {
@@ -156,9 +155,9 @@ export default {
       qian: "签到",
       f_color: " white",
       bg_color: "red",
-      personlist: [],
+      person: {},
       level: "",
-      id: "",
+      id: JSON.parse(localStorage.getItem("id")),
       defaultimg: require("../assets/logo.png")
     };
   },
@@ -167,22 +166,22 @@ export default {
   },
   methods: {
     isLogin() {
-      let id = JSON.parse(localStorage.getItem("id"));
-      if (id == undefined) {
+      if (this.id == undefined) {
       } else {
         this.isShow = true;
-        axios({
-          type: "get",
-          url: `http://47.104.88.123:3000/user/detail?uid=${id}`
-        })
-          .then(res => {
-            this.personlist = res.data.profile;
-            this.level = res.data.level;
-          })
-          .catch(err => {
-            console.log("请登录");
-          });
       }
+      axios({
+        type: "get",
+        url: `http://47.104.88.123:3000/user/detail?uid=${this.id}`
+      })
+        .then(res => {
+          this.person = res.data.profile;
+          console.log(this.person);
+          this.level = res.data.level;
+        })
+        .catch(err => {
+          console.log("请登录");
+        });
     },
 
     login() {
@@ -241,20 +240,14 @@ export default {
           this.code = res.data.code;
           if ((this.code = 200)) {
             localStorage.removeItem("id");
+            this.person = {};
             this.isShow = false;
           }
         })
         .catch(err => {
           console.log("退出登录");
         });
-    },
-    watch() {
-      isLogin();
-      loginOut();
     }
-  },
-  activated() {
-    this.isLogin();
   }
 };
 </script>
@@ -263,6 +256,9 @@ export default {
 .nav .title {
   margin-left: 0.48rem;
 }
+.account {
+  padding-bottom: 0.5rem;
+}
 
 section {
   width: 100%;
@@ -270,9 +266,10 @@ section {
   background: #eeeff0;
   font-size: 0.16rem;
   overflow: auto;
+  margin-top: 0.55rem;
 }
 
-.personlist {
+.person {
   width: 100%;
   height: 1.5rem;
   background: #fff;
@@ -360,9 +357,10 @@ section {
 .per-bot li {
   width: 1.85rem;
   height: 0.5rem;
-  padding-top: 0.04rem;
   text-align: center;
   border-right: 1px solid #e2e3e4;
+  display: flex;
+  flex-direction: column;
 }
 
 .per-bot li h2 {
@@ -440,7 +438,7 @@ section {
   }
 }
 
-.person {
+.loginOut {
   width: 100%;
   display: block;
   color: rgba(255, 255, 255, 1);
