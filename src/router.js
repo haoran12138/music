@@ -48,7 +48,7 @@ export default new Router({
           next();
         }else{
           next({
-            name:'Login'
+            name:'Register'
           });
         }
       },

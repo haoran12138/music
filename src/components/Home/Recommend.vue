@@ -22,6 +22,19 @@
       </div>
     </div>
     <div class="playlist">
+      <h3>推荐MV</h3>
+      <div class="personalizedMv">
+        <figure
+          v-for="item in personalizedMv"
+          :key="item.id"
+          @click="$router.push({name:'mvplayer',query:{id:item.id} })"
+        >
+          <img v-lazy="item.picUrl" :src="item.picUrl" alt />
+          <figcaption>{{ item.name }}</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="playlist">
       <h3>独家放送</h3>
       <div class="toMove">
         <figure
@@ -41,19 +54,6 @@
       <h3>独家电台</h3>
       <div class="djprogram">
         <figure v-for="item in djprogram" :key="item.id">
-          <img v-lazy="item.picUrl" :src="item.picUrl" alt />
-          <figcaption>{{ item.name }}</figcaption>
-        </figure>
-      </div>
-    </div>
-    <div class="playlist">
-      <h3>推荐MV</h3>
-      <div class="personalizedMv">
-        <figure
-          v-for="item in personalizedMv"
-          :key="item.id"
-          @click="$router.push({name:'mvplayer',query:{id:item.id} })"
-        >
           <img v-lazy="item.picUrl" :src="item.picUrl" alt />
           <figcaption>{{ item.name }}</figcaption>
         </figure>
