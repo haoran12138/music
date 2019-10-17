@@ -65,9 +65,7 @@ export default {
     background-color: #fff;
   }
 }
-.lists {
-  margin-top: 0.5rem;
-}
+
 ul {
   li {
     display: flex;

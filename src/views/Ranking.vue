@@ -1,7 +1,7 @@
 <template>
   <div class="ranking">
     <div class="nav">
-      <van-icon class="con" name="coupon" />
+      <van-icon class="con" name="coupon" color="#fff0" />
       <span class="title">排行榜</span>
       <van-icon class="con" name="service-o" @click="showPlay(true)" />
     </div>
@@ -152,6 +152,7 @@ export default {
       flex-wrap: wrap;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
       p {
         height: 0.3rem;
         line-height: 0.3rem;

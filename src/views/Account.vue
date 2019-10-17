@@ -266,7 +266,6 @@ section {
   background: #eeeff0;
   font-size: 0.16rem;
   overflow: auto;
-  margin-top: 0.55rem;
 }
 
 .person {
@@ -285,13 +284,12 @@ section {
 .per-top figure {
   width: 2.44rem;
   height: 1rem;
-  margin-left: 0.31rem;
+  margin-left: 0.25rem;
   display: flex;
   align-items: center;
   img {
     display: block;
     width: 0.6rem;
-    height: 0.6rem;
     border-radius: 50%;
   }
   figcaption {
@@ -357,6 +355,7 @@ section {
 .per-bot li {
   width: 1.85rem;
   height: 0.5rem;
+  padding-top: 0.05rem;
   text-align: center;
   border-right: 1px solid #e2e3e4;
   display: flex;

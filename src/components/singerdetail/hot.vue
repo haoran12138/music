@@ -107,7 +107,7 @@ export default {
     border-top: 1px solid #ccc;
     .info {
       height: 0.5rem;
-      width: 2.5rem;
+      width: 2rem;
       float: left;
       .songName {
         font-size: 0.16rem;

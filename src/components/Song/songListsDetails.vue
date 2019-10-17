@@ -237,9 +237,9 @@ export default {
       float: left;
     }
     .info {
-      padding: 0.1rem;
+      padding-top: 0.1rem;
       float: right;
-      width: 2rem;
+      width: 1.8rem;
       .name {
         font-size: 0.14rem;
       }
@@ -302,7 +302,7 @@ export default {
       border-top: 1px solid #ccc;
       .info {
         height: 0.5rem;
-        width: 2.5rem;
+        width: 2rem;
         float: left;
         .songName {
           font-size: 0.16rem;

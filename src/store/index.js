@@ -69,11 +69,11 @@ const store = new Vuex.Store({
   // actions中存储一些异步操作的内容
   actions: {},
   getters: {
-	  /*
+    /*
 	  playId:(state)=>{
-		  return state.playList[state.playIndex].id;	  
+		  return state.playList[state.playIndex].id;
 	  }
-	  
+
 	  */
   },
   modules: {},
