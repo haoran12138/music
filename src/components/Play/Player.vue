@@ -20,7 +20,7 @@
         <div class="cover">
           <img :src="songs.al.picUrl" alt />
         </div>
-
+        <div class="lyric">{{lyric}}</div>
         <div class="Audio">
           <audio id="audioTag" :src="url"></audio>
           <div class="schedule">
@@ -74,7 +74,8 @@
   </transition>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import Lyric from "lrc-file-parser";
+import { mapMutations, mapState, mapGetters } from "vuex";
 import axios from "axios";
 import "../../common/font/iconfont.css";
 export default {
@@ -91,18 +92,14 @@ export default {
       sound: 100,
       iconName: "play-circle-o",
       showPlayList: false,
-      modeClassName: "iconfont icon--lbxh"
+      modeClassName: "iconfont icon--lbxh",
+      lrc: {},
+      lyric: ""
     };
   },
   computed: {
-    ...mapState([
-      "isShow",
-      "playList",
-      "playId",
-      "playMode",
-      "playIndex",
-      "isPlay"
-    ]),
+    ...mapState(["isShow", "playList", "playMode", "playIndex", "isPlay"]),
+    ...mapGetters(["playId"]),
     playModeUrl() {
       return `./${this.playMode}.png`;
     }
@@ -154,9 +151,11 @@ export default {
         //改变暂停/播放icon
         if (audio.paused) {
           audio.play();
+          _this.lrc.play(audio.currentTime * 1000);
           _this.iconName = "pause-circle-o";
         } else {
           audio.pause();
+          _this.lrc.pause();
           _this.iconName = "play-circle-o";
         }
       });
@@ -174,6 +173,7 @@ export default {
         var rate = e.offsetX / pgsWidth;
         audio.currentTime = audio.duration * rate;
         updateProgress();
+        _this.lrc.play(audio.currentTime * 1000);
       });
     });
     //转换音频时长显示
@@ -215,6 +215,13 @@ export default {
         _this.nextPlay();
       }
     }
+    this.lrc = new Lyric({
+      onPlay: function(line, text) {
+        _this.lyric = text;
+      },
+      onSetLyric: function(lines) {},
+      offset: -1000,
+    });
   },
   watch: {
     // 监听id 是否改变 切换歌曲
@@ -234,20 +241,29 @@ export default {
       // 获得歌曲url
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/song/url?id=${this.playId}`
+        url: `http://134.175.69.66:3000/song/url?id=${this.playId}`
       }).then(res => {
         _this.url = res.data.data[0].url;
         setTimeout(() => {
           $("#playPause").click();
+          _this.lrc.play(0);
           _this.now();
         }, 1000);
       });
       // 获得歌曲信息
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/song/detail?ids=${this.playId}`
+        url: `http://134.175.69.66:3000/song/detail?ids=${this.playId}`
       }).then(res => {
         _this.songs = res.data.songs[0];
+      });
+      // 获取歌词
+      axios({
+        type: "get",
+        url: `http://134.175.69.66:3000/lyric?id=${this.playId}`
+      }).then(res => {
+        const lyric = res.data.lrc.lyric;
+        _this.lrc.setLyric(lyric);
       });
     },
     // 解决在播放页也可以滚动body 问题
@@ -366,6 +382,11 @@ export default {
       img {
         height: 100%;
       }
+    }
+    .lyric {
+      text-align: center;
+      height: 15vh;
+      line-height: 15vh;
     }
     .Audio {
       position: absolute;

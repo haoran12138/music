@@ -80,31 +80,31 @@ export default {
   created() {
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/banner?type=2"
+      url: "http://134.175.69.66:3000/banner?type=2"
     }).then(res => {
       this.banners = res.data.banners;
     });
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/top/playlist/highquality?limit=6"
+      url: "http://134.175.69.66:3000/top/playlist/highquality?limit=6"
     }).then(res => {
       this.highquality = res.data.playlists;
     });
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/top/mv?limit=4"
+      url: "http://134.175.69.66:3000/top/mv?limit=4"
     }).then(res => {
       this.toMove = res.data.data;
     });
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/personalized/djprogram"
+      url: "http://134.175.69.66:3000/personalized/djprogram"
     }).then(res => {
       this.djprogram = res.data.result;
     });
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/personalized/mv"
+      url: "http://134.175.69.66:3000/personalized/mv"
     }).then(res => {
       this.personalizedMv = res.data.result;
     });

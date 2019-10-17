@@ -37,7 +37,7 @@ export default {
       this.singerList = [];
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/search?type=100&keywords=${this.$route.query.keyword}`
+        url: `http://134.175.69.66:3000/search?type=100&keywords=${this.$route.query.keyword}`
       }).then(res => {
         this.singerList = res.data.result.artists;
       });

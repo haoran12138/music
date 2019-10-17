@@ -34,7 +34,7 @@ export default {
     let id = JSON.parse(localStorage.getItem("id"));
     axios({
       type: "get",
-      url: `http://47.104.88.123:3000/user/follows?uid=${id}`
+      url: `http://134.175.69.66:3000/user/follows?uid=${id}`
     }).then(res => {
       this.conlist = res.data.follow;
       console.log(res.data.follow);
@@ -58,24 +58,24 @@ export default {
 
       let domBtn = document.querySelectorAll("button")[index];
       if (domBtn.className == "btn btnclone") {
-        
+
         domBtn.className = "btn btnconcern";
       } else {
         domBtn.className = "btn btnclone";
        let id = JSON.parse(localStorage.getItem("id"));
         axios({
           type: "get",
-          url: `http://47.104.88.123:3000/follow?id=${id}&t=1`
+          url: `http://134.175.69.66:3000/follow?id=${id}&t=1`
         }).then(res => {
           this.conlist = res.data.user;
           console.log(res.data.user);
           this.index = this.conlist.index;
-          
+
         });
-        
+
       }
     },
-    
+
   }
 };
 </script>

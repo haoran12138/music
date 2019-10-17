@@ -40,7 +40,7 @@ export default {
     this.singerlist = [];
     axios({
       type: "get",
-      url: `http://47.104.88.123:3000/artist/list?cat=${this.$route.query.id}`
+      url: `http://134.175.69.66:3000/artist/list?cat=${this.$route.query.id}`
     }).then(res => {
       this.singerlist = res.data.artists;
     });

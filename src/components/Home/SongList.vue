@@ -33,7 +33,7 @@ export default {
   created() {
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/top/playlist?limit=20&order=hot"
+      url: "http://134.175.69.66:3000/top/playlist?limit=20&order=hot"
     }).then(res => {
       this.playlist = res.data.playlists;
     });

@@ -172,7 +172,7 @@ export default {
       }
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/user/detail?uid=${this.id}`
+        url: `http://134.175.69.66:3000/user/detail?uid=${this.id}`
       })
         .then(res => {
           this.person = res.data.profile;
@@ -233,7 +233,7 @@ export default {
       // localStorage.removeItem("id");
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/logout`
+        url: `http://134.175.69.66:3000/logout`
       })
         .then(res => {
           console.log(res.data.code);

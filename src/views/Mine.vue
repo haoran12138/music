@@ -114,7 +114,7 @@ export default {
   created() {
     let id = JSON.parse(localStorage.getItem("id"));
     axios({
-      url: `http://47.104.88.123:3000/user/playlist?uid=${id}`
+      url: `http://134.175.69.66:3000/user/playlist?uid=${id}`
     }).then(res => {
       res.data.playlist.forEach((item, index) => {
         if (item.ordered) {

@@ -70,7 +70,7 @@ export default {
       if (type == 1) {
         axios({
           type: "get",
-          url: `http://47.104.88.123:3000/video/url?id=${id}`
+          url: `http://134.175.69.66:3000/video/url?id=${id}`
         }).then(res => {
           this.url = res.data.urls[0].url;
           this.info = { name: "", desc: "" };
@@ -78,7 +78,7 @@ export default {
       } else {
         axios({
           type: "get",
-          url: `http://47.104.88.123:3000/mv/detail?mvid=${id}`
+          url: `http://134.175.69.66:3000/mv/detail?mvid=${id}`
         }).then(res => {
           let brsKey = Object.keys(res.data.data.brs);
           let key = brsKey[brsKey.length - 1];
@@ -89,7 +89,7 @@ export default {
 
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/related/allvideo?id=${id}`
+        url: `http://134.175.69.66:3000/related/allvideo?id=${id}`
       }).then(res => {
         this.relatedlist = res.data.data;
       });

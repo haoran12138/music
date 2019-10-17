@@ -83,7 +83,7 @@ export default {
       this.show = false;
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/album?id=${this.id}`
+        url: `http://134.175.69.66:3000/album?id=${this.id}`
       }).then(res => {
         this.songs = res.data.songs;
         this.album = res.data.album;

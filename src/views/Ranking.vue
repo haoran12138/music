@@ -83,7 +83,7 @@ export default {
   created() {
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/toplist/detail"
+      url: "http://134.175.69.66:3000/toplist/detail"
     }).then(res => {
       this.list = res.data.list;
       // 获取歌单要一个xid
