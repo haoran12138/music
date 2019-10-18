@@ -32,7 +32,7 @@ export default {
   created() {
     let id = JSON.parse(localStorage.getItem("id"));
     axios({
-      type: "get",
+      method: "get",
       url: `http://134.175.69.66:3000/user/followeds?uid=${id}`
     }).then(res => {
       this.conlist = res.data.followeds;
@@ -59,7 +59,7 @@ export default {
       if (domBtn.className == "btn btnclone") {
         let id = JSON.parse(localStorage.getItem("id"));
         axios({
-          type: "get",
+          method: "get",
           url: `http://134.175.69.66:3000/follow?id=${id}&t=1`
         }).then(res => {
           this.conlist = res.data.user;
