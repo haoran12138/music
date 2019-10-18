@@ -53,7 +53,7 @@ export default {
     login() {
       if (this.email && this.password) {
         axios({
-          type: "post",
+          method: "post",
           url: `http://134.175.69.66:3000/login?email=${this.email}&password=${this.password}`
         })
           .then(res => {
