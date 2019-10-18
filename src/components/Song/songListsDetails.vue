@@ -83,7 +83,7 @@ export default {
     updateList: function() {
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/playlist/detail?id=${this.id}`
+        url: `http://134.175.69.66:3000/playlist/detail?id=${this.id}`
       }).then(res => {
         this.list = res.data.playlist;
       });
@@ -237,9 +237,9 @@ export default {
       float: left;
     }
     .info {
-      padding: 0.1rem;
+      padding-top: 0.1rem;
       float: right;
-      width: 2rem;
+      width: 1.8rem;
       .name {
         font-size: 0.14rem;
       }

@@ -65,7 +65,7 @@ export default {
   created() {
     axios({
       type: "get",
-      url: `http://47.104.88.123:3000/search/hot/detail`
+      url: `http://134.175.69.66:3000/search/hot/detail`
     }).then(res => {
       this.list = res.data.data;
     });
@@ -75,7 +75,7 @@ export default {
       if (this.value.trim()) {
         axios({
           type: "get",
-          url: `http://47.104.88.123:3000/search/suggest?keywords=${this.value}&type=mobile`
+          url: `http://134.175.69.66:3000/search/suggest?keywords=${this.value}&type=mobile`
         }).then(res => {
           this.suggest = res.data.result.allMatch;
         });

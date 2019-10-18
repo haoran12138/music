@@ -20,7 +20,11 @@
         <div class="cover">
           <img :src="songs.al.picUrl" alt />
         </div>
-
+        <div class="lyrics">
+          <div>{{lyric}}</div>
+          <div v-show="isTlrc && isTlrcShow">{{tlyric}}</div>
+          <button v-show="isTlrc" :class="{show:isTlrcShow}" @click="changShowTlrc">译</button>
+        </div>
         <div class="Audio">
           <audio id="audioTag" :src="url"></audio>
           <div class="schedule">
@@ -74,7 +78,8 @@
   </transition>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import Lyric from "lrc-file-parser";
+import { mapMutations, mapState, mapGetters } from "vuex";
 import axios from "axios";
 import "../../common/font/iconfont.css";
 export default {
@@ -91,18 +96,21 @@ export default {
       sound: 100,
       iconName: "play-circle-o",
       showPlayList: false,
-      modeClassName: "iconfont icon--lbxh"
+      modeClassName: "iconfont icon--lbxh",
+      lrc: {},
+      tlrc: {},
+      lyric: "",
+      tlyric: "",
+      nolyric: "false",
+      // 是否有翻译歌词
+      isTlrc: false,
+      // 是否显示歌词
+      isTlrcShow: false
     };
   },
   computed: {
-    ...mapState([
-      "isShow",
-      "playList",
-      "playId",
-      "playMode",
-      "playIndex",
-      "isPlay"
-    ]),
+    ...mapState(["isShow", "playList", "playMode", "playIndex", "isPlay"]),
+    ...mapGetters(["playId"]),
     playModeUrl() {
       return `./${this.playMode}.png`;
     }
@@ -138,9 +146,44 @@ export default {
         .eq(this.playIndex)
         .position().top;
       $(".playList").animate({ scrollTop: nowTop + "px" }, 300);
+    },
+    newLrc() {
+      this.tlrc = new Lyric({});
+      this.lrc = new Lyric({
+        onPlay: (line, text) => {
+          this.lyric = text;
+          if (this.isTlrc) {
+            this.tlyric = this.tlrc.lines[line].text;
+          }
+        },
+        offset: -1000
+      });
+    },
+    playLrc(time) {
+      if (this.nolyric) return;
+      this.lrc.play(time);
+    },
+    pauseLrc() {
+      if (this.nolyric) return;
+      this.lrc.pause();
+    },
+    setLrc(data) {
+      this.nolyric = data.nolyric;
+      if (this.nolyric) return;
+      this.lrc.setLyric(data.lrc.lyric);
+      if (data.tlyric.lyric) {
+        this.isTlrc = true;
+        this.tlrc.setLyric(data.tlyric.lyric);
+      } else {
+        this.isTlrc = false;
+      }
+    },
+    changShowTlrc() {
+      this.isTlrcShow = !this.isTlrcShow;
     }
   },
   created() {
+    this.newLrc();
     var _this = this;
     $(function() {
       var audio = document.getElementsByTagName("audio")[0];
@@ -154,9 +197,11 @@ export default {
         //改变暂停/播放icon
         if (audio.paused) {
           audio.play();
+          _this.playLrc(audio.currentTime * 1000);
           _this.iconName = "pause-circle-o";
         } else {
           audio.pause();
+          _this.pauseLrc();
           _this.iconName = "play-circle-o";
         }
       });
@@ -173,6 +218,7 @@ export default {
       $(".pgs").click(function(e) {
         var rate = e.offsetX / pgsWidth;
         audio.currentTime = audio.duration * rate;
+        _this.playLrc(audio.currentTime * 1000);
         updateProgress();
       });
     });
@@ -208,6 +254,7 @@ export default {
       if (_this.playMode === 2) {
         // 单曲循环
         audio.play();
+        _this.playLrc(0);
       } else {
         audio.currentTime = 0;
         audio.pause();
@@ -227,14 +274,14 @@ export default {
       audio.currentTime = 0;
       audio.pause();
       _this.iconName = "play-circle-o";
-
       $(".play-pause>span")
         .removeClass("icon-pause")
         .addClass("icon-play");
+
       // 获得歌曲url
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/song/url?id=${this.playId}`
+        url: `http://134.175.69.66:3000/song/url?id=${this.playId}`
       }).then(res => {
         _this.url = res.data.data[0].url;
         setTimeout(() => {
@@ -245,9 +292,16 @@ export default {
       // 获得歌曲信息
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/song/detail?ids=${this.playId}`
+        url: `http://134.175.69.66:3000/song/detail?ids=${this.playId}`
       }).then(res => {
         _this.songs = res.data.songs[0];
+      });
+      // 获取歌词
+      axios({
+        type: "get",
+        url: `http://134.175.69.66:3000/lyric?id=${this.playId}`
+      }).then(res => {
+        _this.setLrc(res.data);
       });
     },
     // 解决在播放页也可以滚动body 问题
@@ -262,6 +316,7 @@ export default {
     sound: function() {
       $("#audioTag").get(0).volume = this.sound / 100;
     },
+    // 播放模式改变
     isPlay() {
       if (this.url === "") {
         return;
@@ -318,7 +373,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(153, 153, 153, 0.25);
+    background: rgba(153, 153, 153, 0.3);
     .header {
       .down {
         float: left;
@@ -360,11 +415,36 @@ export default {
     }
     .cover {
       margin: 0 auto;
-      margin-top: 15vh;
+      margin-top: 10vh;
       width: 2.5rem;
       height: 2.5rem;
+      overflow: hidden;
       img {
         height: 100%;
+      }
+    }
+    .lyrics {
+      position: relative;
+      display: flex;
+      height: 20vh;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      div {
+        margin: 1vh 0;
+      }
+      button {
+        position: absolute;
+        bottom: 0;
+        right: 5vw;
+        width: 8vw;
+        height: 8vw;
+        border: 1px solid #fff0;
+        background: #fff0;
+        color: #ffffff70;
+        &.show {
+          color: #ffffff;
+        }
       }
     }
     .Audio {

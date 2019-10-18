@@ -21,7 +21,7 @@ export default {
     let id = this.$route.query.id;
     axios({
       type: "get",
-      url: `http://47.104.88.123:3000/artist/desc?id=${id}`
+      url: `http://134.175.69.66:3000/artist/desc?id=${id}`
     }).then(res => {
       this.desclist = res.data.introduction;
       this.descs = res.data;

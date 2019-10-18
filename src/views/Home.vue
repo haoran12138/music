@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="nav">
-      <van-icon class="con" name="coupon" />
+      <van-icon class="con" name="coupon" color="#fff0" />
       <input
         @click=" $router.push({ name: 'Search' })"
         class="search"

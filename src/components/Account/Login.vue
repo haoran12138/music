@@ -54,7 +54,7 @@ export default {
       if (this.email && this.password) {
         axios({
           type: "post",
-          url: `http://47.104.88.123:3000/login?email=${this.email}&password=${this.password}`
+          url: `http://134.175.69.66:3000/login?email=${this.email}&password=${this.password}`
         })
           .then(res => {
             this.id = res.data.account.id;

@@ -47,7 +47,7 @@ export default {
       let id = this.$route.query.id;
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/artist/album?id=${id}`
+        url: `http://134.175.69.66:3000/artist/album?id=${id}`
       }).then(res => {
         this.singerdetail = res.data.artist;
       });
@@ -67,12 +67,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pictop {
-  margin-top: 0.3rem;
   overflow: hidden;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2.4rem;
 }
 </style>

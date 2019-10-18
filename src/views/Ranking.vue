@@ -1,7 +1,7 @@
 <template>
   <div class="ranking">
     <div class="nav">
-      <van-icon class="con" name="coupon" />
+      <van-icon class="con" name="coupon" color="#fff0" />
       <span class="title">排行榜</span>
       <van-icon class="con" name="service-o" @click="showPlay(true)" />
     </div>
@@ -83,7 +83,7 @@ export default {
   created() {
     axios({
       type: "get",
-      url: "http://47.104.88.123:3000/toplist/detail"
+      url: "http://134.175.69.66:3000/toplist/detail"
     }).then(res => {
       this.list = res.data.list;
       // 获取歌单要一个xid
@@ -152,6 +152,7 @@ export default {
       flex-wrap: wrap;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
       p {
         height: 0.3rem;
         line-height: 0.3rem;

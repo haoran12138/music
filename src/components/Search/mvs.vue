@@ -29,7 +29,7 @@ export default {
       this.mvs = [];
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/search?type=1004&keywords=${this.$route.query.keyword}`
+        url: `http://134.175.69.66:3000/search?type=1004&keywords=${this.$route.query.keyword}`
       }).then(res => {
         this.mvs = res.data.result.mvs;
       });

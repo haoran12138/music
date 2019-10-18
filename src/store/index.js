@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -7,10 +8,13 @@ const store = new Vuex.Store({
     // 播放器是否显示
     isShow: false,
     // 播放列表  放首默认歌曲
-    playList: [],
+    playList: [
+      {
+        id: 0,
+      },
+    ],
     // 播放第几个
-    playIndex: -1,
-    playId: '',
+    playIndex: 0,
     // 播放模式  1:列表循环  2:单曲循环  3:随机播放
     playMode: 1,
     // 视频播放的时候暂停音乐
@@ -37,7 +41,6 @@ const store = new Vuex.Store({
       } else {
         state.playIndex -= 1;
       }
-      state.playId = state.playList[state.playIndex].id;
     },
     // 下一首
     nextPlay(state) {
@@ -50,11 +53,9 @@ const store = new Vuex.Store({
       } else {
         state.playIndex += 1;
       }
-      state.playId = state.playList[state.playIndex].id;
     },
     changeIndex(state, payload) {
       state.playIndex = payload;
-      state.playId = state.playList[state.playIndex].id;
     },
     changePlayMode(state) {
       state.playMode += 1;
@@ -68,7 +69,11 @@ const store = new Vuex.Store({
   },
   // actions中存储一些异步操作的内容
   actions: {},
-  getters: {},
+  getters: {
+    playId: state => {
+      return state.playList[state.playIndex].id;
+    },
+  },
   modules: {},
 });
 

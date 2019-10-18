@@ -45,7 +45,7 @@ export default {
       this.songlist = [];
       axios({
         type: "get",
-        url: `http://47.104.88.123:3000/artists?id=${this.id}`
+        url: `http://134.175.69.66:3000/artists?id=${this.id}`
       }).then(res => {
         this.songlist = res.data.hotSongs;
       });
