@@ -147,30 +147,22 @@ export default {
       $(".playList").animate({ scrollTop: nowTop + "px" }, 300);
     },
     newLrc() {
+      this.tlrc = new Lyric({});
       this.lrc = new Lyric({
         onPlay: (line, text) => {
           this.lyric = text;
-        },
-        offset: -1000
-      });
-      this.tlrc = new Lyric({
-        onPlay: (line, text) => {
-          this.tlyric = text;
+          if(this.isTlrc){
+            this.tlyric = this.tlrc.lines[line].text;
+          }
         },
         offset: -1000
       });
     },
     playLrc(time) {
       this.lrc.play(time);
-      if (this.isTlrc) {
-        this.tlrc.play(time);
-      }
     },
     pauseLrc() {
       this.lrc.pause();
-      if (this.isTlrc) {
-        this.tlrc.pause();
-      }
     },
     setLrc(data) {
       this.lrc.setLyric(data.lrc.lyric);
@@ -221,6 +213,7 @@ export default {
       $(".pgs").click(function(e) {
         var rate = e.offsetX / pgsWidth;
         audio.currentTime = audio.duration * rate;
+        _this.playLrc(audio.currentTime * 1000);
         updateProgress();
       });
     });
@@ -249,7 +242,7 @@ export default {
       );
       $(".pgs-play").css("width", value + "%");
       $(".played-time").html(transTime(audio.currentTime));
-      _this.playLrc(audio.currentTime * 1000);
+
     }
     //播放完成
     function audioEnded() {
@@ -376,7 +369,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(153, 153, 153, 0.25);
+    background: rgba(153, 153, 153, 0.3);
     .header {
       .down {
         float: left;
@@ -418,7 +411,7 @@ export default {
     }
     .cover {
       margin: 0 auto;
-      margin-top: 15vh;
+      margin-top: 10vh;
       width: 2.5rem;
       height: 2.5rem;
       img {
@@ -428,11 +421,13 @@ export default {
     .lyrics {
       position: relative;
       display: flex;
-      height: 15vh;
+      height: 20vh;
       flex-direction: column;
       justify-content: center;
       text-align: center;
-      line-height: 5vh;
+      div{
+        margin: 1vh 0 ;
+      }
       button {
         position: absolute;
         bottom: 0;
