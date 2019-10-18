@@ -171,7 +171,7 @@ export default {
         this.isShow = true;
       }
       axios({
-        type: "get",
+        method: "get",
         url: `http://134.175.69.66:3000/user/detail?uid=${this.id}`
       })
         .then(res => {
@@ -231,7 +231,7 @@ export default {
     loginOut() {
       // localStorage.removeItem("id");
       axios({
-        type: "get",
+        method: "get",
         url: `http://134.175.69.66:3000/logout`
       })
         .then(res => {
