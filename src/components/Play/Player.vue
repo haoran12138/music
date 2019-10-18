@@ -101,6 +101,7 @@ export default {
       tlrc: {},
       lyric: "",
       tlyric: "",
+      nolyric: "false",
       // 是否有翻译歌词
       isTlrc: false,
       // 是否显示歌词
@@ -151,7 +152,7 @@ export default {
       this.lrc = new Lyric({
         onPlay: (line, text) => {
           this.lyric = text;
-          if(this.isTlrc){
+          if (this.isTlrc) {
             this.tlyric = this.tlrc.lines[line].text;
           }
         },
@@ -159,12 +160,16 @@ export default {
       });
     },
     playLrc(time) {
+      if (this.nolyric) return;
       this.lrc.play(time);
     },
     pauseLrc() {
+      if (this.nolyric) return;
       this.lrc.pause();
     },
     setLrc(data) {
+      this.nolyric = data.nolyric;
+      if (this.nolyric) return;
       this.lrc.setLyric(data.lrc.lyric);
       if (data.tlyric.lyric) {
         this.isTlrc = true;
@@ -242,7 +247,6 @@ export default {
       );
       $(".pgs-play").css("width", value + "%");
       $(".played-time").html(transTime(audio.currentTime));
-
     }
     //播放完成
     function audioEnded() {
@@ -414,6 +418,7 @@ export default {
       margin-top: 10vh;
       width: 2.5rem;
       height: 2.5rem;
+      overflow: hidden;
       img {
         height: 100%;
       }
@@ -425,8 +430,8 @@ export default {
       flex-direction: column;
       justify-content: center;
       text-align: center;
-      div{
-        margin: 1vh 0 ;
+      div {
+        margin: 1vh 0;
       }
       button {
         position: absolute;

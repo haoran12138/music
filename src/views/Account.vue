@@ -176,7 +176,6 @@ export default {
       })
         .then(res => {
           this.person = res.data.profile;
-          console.log(this.person);
           this.level = res.data.level;
         })
         .catch(err => {
